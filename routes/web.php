@@ -5,6 +5,7 @@ use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
 
 use App\Http\Controllers\HomeController;
+use App\Http\Controllers\CreditCardController;
 
 /*
 |--------------------------------------------------------------------------
@@ -31,5 +32,9 @@ Route::middleware(['auth:sanctum',config('jetstream.auth_session'),'verified',])
     Route::get('/dashboard', function () { return Inertia::render('Dashboard'); })->name('dashboard');
 
     Route::post('/user-theme', [HomeController::class, 'themeUpdate'])->name('user-theme.update');
+
+    Route::get('/user-creditcard', [CreditCardController::class, 'show'])->name('user-creditcard.show');
+    Route::post('/user-creditcard', [CreditCardController::class, 'update'])->name('user-creditcard.update');
+    Route::delete('/user-creditcard', [CreditCardController::class, 'destroy'])->name('user-creditcard.destroy');
 
 });

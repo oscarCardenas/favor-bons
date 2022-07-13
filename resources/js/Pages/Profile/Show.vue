@@ -7,6 +7,7 @@ import TwoFactorAuthenticationForm from '@/Pages/Profile/Partials/TwoFactorAuthe
 import UpdatePasswordForm from '@/Pages/Profile/Partials/UpdatePasswordForm.vue';
 import UpdateTheme from '@/Pages/Profile/Partials/UpdateTheme.vue';
 import UpdateProfileInformationForm from '@/Pages/Profile/Partials/UpdateProfileInformationForm.vue';
+import UpdateCreditCardInformationForm from '@/Pages/Profile/Partials/UpdateCreditCardInformationForm.vue';
 
 defineProps({
     confirmsTwoFactorAuthentication: Boolean,
@@ -36,8 +37,14 @@ defineProps({
                     <JetSectionBorder />
                 </div>
 
-                <div v-if="$page.props.jetstream.canUpdatePassword">
+                <div v-if="$page.props.jetstream.canUpdateProfileInformation">
                     <UpdateTheme class="mt-10 sm:mt-0" :user="$page.props.user" />
+
+                    <JetSectionBorder />
+                </div>
+
+                <div v-if="$page.props.jetstream.canUpdateProfileInformation">
+                    <UpdateCreditCardInformationForm />
 
                     <JetSectionBorder />
                 </div>
