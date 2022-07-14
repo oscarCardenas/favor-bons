@@ -48,6 +48,11 @@ Run migrations:
 php artisan migrate
 ```
 
+Run Seeders:
+```
+php artisan db:seed
+```
+
 Install npm:
 ```
 npm install
