@@ -6,6 +6,8 @@ use Inertia\Inertia;
 
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\CreditCardController;
+use App\Http\Controllers\PublicController;
+use App\Http\Controllers\ActiveCampaignController;
 
 /*
 |--------------------------------------------------------------------------
@@ -18,14 +20,20 @@ use App\Http\Controllers\CreditCardController;
 |
 */
 
-Route::get('/', function () {
-    return Inertia::render('Welcome', [
-        'canLogin' => Route::has('login'),
-        'canRegister' => Route::has('register'),
-        'laravelVersion' => Application::VERSION,
-        'phpVersion' => PHP_VERSION,
-    ]);
-});
+// Route::get('/', function () {
+//     return Inertia::render('Welcome', [
+//         'canLogin' => Route::has('login'),
+//         'canRegister' => Route::has('register'),
+//         'laravelVersion' => Application::VERSION,
+//         'phpVersion' => PHP_VERSION,
+//     ]);
+// });
+
+Route::get('/', [PublicController::class, 'index'])->name('public.index');
+
+Route::post('/client', [ActiveCampaignController::class, 'store'])->name('client.store');
+
+
 
 Route::middleware(['auth:sanctum',config('jetstream.auth_session'),'verified',])->group(function () {
     
