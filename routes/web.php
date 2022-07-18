@@ -30,6 +30,7 @@ use App\Http\Controllers\ActiveCampaignController;
 // });
 
 Route::get('/', [PublicController::class, 'index'])->name('public.index');
+Route::get('/categories', [PublicController::class, 'categories'])->name('public.categories');
 
 Route::post('/client', [ActiveCampaignController::class, 'store'])->name('client.store');
 
