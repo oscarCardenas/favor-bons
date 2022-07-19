@@ -22,16 +22,10 @@ class ActiveCampaignController extends Controller
             'email' => ['required', 'string', 'email', 'max:255', 'unique:users'],
         ]);
         
-        ActiveCampaign::create([
-            'email' => $request->input('email'),
-            'categories' => json_encode($request->input('checkedCategories'))
-        ]);
+        ActiveCampaign::create(['email' => $request->input('email')]);
 
         Mail::to(env('MAIL_TO_ADMIN'))->send(
-            new SendActiveCampaign(
-                $request->input('email'), 
-                Category::whereIn('id',$request->input('checkedCategories'))->get()
-            )
+            new SendActiveCampaign($request->input('email'))
         );
 
         return Redirect::route('public.index');

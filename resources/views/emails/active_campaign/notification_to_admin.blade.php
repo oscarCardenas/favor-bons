@@ -5,14 +5,4 @@
     <p>
         Email Client: {{ $client }}
     </p>
-    <p>
-        Preferences:
-        <ul>
-            @foreach ($categories as $category)
-            <li>
-                {{ $category->name }}
-            </li>
-            @endforeach
-        </ul>
-    </p>
 </body>

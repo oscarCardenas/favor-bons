@@ -6,7 +6,6 @@ import { useForm, usePage } from '@inertiajs/inertia-vue3';
 const el = ref()
 
 onMounted(() => {
-    getCategories();
     setTimeout(() => verifyloggedIn(), 2000);
     if(usePage().props.value.user){
         console.log("Dark mode: " + usePage().props.value.user.theme);
@@ -23,14 +22,7 @@ const form = useForm({
     email: ''
 });
 
-const getCategories = () => {
-    axios.get(route('public.categories')).then(response => {
-        categories.value = response.data.categories;
-    });
-};
-
 const loggedIn = ref(null);
-const categories = ref([]);
 
 const verifyloggedIn = () => {
     /** Show register modal if variable client is false */
@@ -198,6 +190,10 @@ const logout = () => {
                                             Manage Account
                                         </div>
 
+                                        <JetDropdownLink :href="route('support.show')">
+                                            Customer Support
+                                        </JetDropdownLink>
+
                                         <JetDropdownLink :href="route('profile.show')">
                                             Profile
                                         </JetDropdownLink>
@@ -353,34 +349,21 @@ const logout = () => {
 
         <!-- modal login -->
         <JetDialogModal :show="loggedIn == false">
-        <!-- :closeable="false" -->
+
             <template #title>
                 Favorbonds
             </template>
 
             <template #content>
-                <p>
-                    <Link :href="route('login')" class="text-sm text-gray-700 underline">
-                        Log in
-                    </Link>,
-                    <Link :href="route('register')" class="ml-4 text-sm text-gray-700 underline">
-                        Register
-                    </Link>
-                    or enter your email to continue viewing FavorBonds and so much more.
-                </p>
-                <p>
-                    Categories of Favors Interested In (select all that apply)
-                </p>
+                <div class="flex pr-4 pl-4">
+                    <p class="text-center">
+                        <!-- <Link :href="route('login')" :data="{ redirect_to: 'url_parametro' }">xx</Link> <br>  
+                        <Link :href="route('login', { redirect_to: 'url_parametro' })">logtest</Link>       <br>            -->
+                        <Link :href="route('login')" class="text-sm text-gray-700 underline">Log in</Link>
+                         or enter your email to continue viewing FavorBonds and so much more.
+                    </p>
+                </div>
                 <form @submit.prevent="registerClient">
-                    <div class="grid grid-rows-4 grid-flow-col gap-4 mt-6">
-                        <div class="flex items-center" v-for="(c,i) in categories" :key="i">
-                            <input type="checkbox" :id="'category'+c.id" :value="c.id" v-model="form.checkedCategories" class="form-check-input appearance-none h-4 w-4 border border-gray-300 rounded-sm bg-white checked:bg-blue-600 checked:border-blue-600 focus:outline-none transition duration-200 mt-1 align-top bg-no-repeat bg-center bg-contain float-left mr-2 cursor-pointer dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600">
-                            <label :for="'category'+c.id" class="ml-2 text-sm font-medium text-gray-900 dark:text-gray-300">
-                                {{ c.name}}
-                            </label>
-                        </div>
-                    </div> 
-
                     <div class="flex items-center justify-end sm:px-6 ">
                         <div class="grid md:grid-cols-2 md:gap-6 mt-6">
                             <div class="relative z-0 w-full mb-4 group">

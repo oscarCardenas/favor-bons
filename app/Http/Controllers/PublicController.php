@@ -7,8 +7,6 @@ use Inertia\Inertia;
 use Illuminate\Support\Facades\Redirect;
 
 use App\Models\Category;
-
-
 use App\Models\User;
 
 class PublicController extends Controller
@@ -19,9 +17,9 @@ class PublicController extends Controller
         return Inertia::render('Public/Index',['categories' => Category::all()]);
     }
 
-    public function categories()
-    {
-        return ['categories' => Category::all()];
-    }
+    // public function categories()
+    // {
+    //     return ['categories' => Category::all()];
+    // }
 
 }

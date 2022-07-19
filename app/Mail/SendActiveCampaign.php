@@ -11,12 +11,10 @@ class SendActiveCampaign extends Mailable
     use Queueable, SerializesModels;
  
     protected $client;
-    protected $categories;
  
-    public function __construct($client,$categories)
+    public function __construct($client)
     {
         $this->client = $client;
-        $this->categories = $categories;
     }
  
     /**
@@ -28,9 +26,6 @@ class SendActiveCampaign extends Mailable
     {
         return $this->view('emails.active_campaign.notification_to_admin')
             ->subject('New Cliente from active campaign')
-            ->with([
-                'client' => $this->client,
-                'categories' => $this->categories,
-            ]);
+            ->with(['client' => $this->client]);
     }
 }

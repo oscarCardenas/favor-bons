@@ -8,6 +8,8 @@ use App\Http\Controllers\HomeController;
 use App\Http\Controllers\CreditCardController;
 use App\Http\Controllers\PublicController;
 use App\Http\Controllers\ActiveCampaignController;
+use App\Http\Controllers\CustomerSupportController;
+use App\Http\Controllers\LoginController;
 
 /*
 |--------------------------------------------------------------------------
@@ -30,15 +32,18 @@ use App\Http\Controllers\ActiveCampaignController;
 // });
 
 Route::get('/', [PublicController::class, 'index'])->name('public.index');
-Route::get('/categories', [PublicController::class, 'categories'])->name('public.categories');
-
+// Route::get('/categories', [PublicController::class, 'categories'])->name('public.categories');
 Route::post('/client', [ActiveCampaignController::class, 'store'])->name('client.store');
 
-
+// Route::get('/login', [LoginController::class, 'create'])->name('login');
+// Route::post('/login', [LoginController::class, 'store'])->name('login.store');
 
 Route::middleware(['auth:sanctum',config('jetstream.auth_session'),'verified',])->group(function () {
     
     Route::get('/dashboard', function () { return Inertia::render('Dashboard'); })->name('dashboard');
+
+    Route::get('/support', [CustomerSupportController::class, 'show'])->name('support.show');
+    Route::post('/support', [CustomerSupportController::class, 'store'])->name('support.store');
 
     Route::post('/user-theme', [HomeController::class, 'themeUpdate'])->name('user-theme.update');
 
