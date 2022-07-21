@@ -20,8 +20,7 @@ return new class extends Migration
             $table->string('card_number');
             $table->string('exp_date');
             $table->string('cvc');
-            $table->text('billing_address');
-            $table->integer('status')->default(1);
+            $table->integer('default_payment')->nullable();
             $table->timestamps();
 
             $table->foreign('user_id')->references('id')->on('users')

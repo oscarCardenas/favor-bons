@@ -16,35 +16,56 @@ use DB;
 
 class CreditCardController extends Controller
 {
-
-    public function show(Request $request)
+    
+    public function index(Request $request)
     {
-        $r['creditcard'] = CreditCard::where('user_id',Auth::id())->where('status',1)->first();
-        return $r;
+        return CreditCard::where('user_id',Auth::id())->orderBy('default_payment','asc')->get();
+    }
+
+    public function store(Request $request){
+        $request->validate([
+            'full_name' => 'required',
+            'card_number' => 'required',
+            'exp_date' => 'required',
+            'cvc' => 'required'
+        ]);
+
+        $exists = CreditCard::where('user_id',Auth::id())->where('card_number', $request->input('card_number'))->count();
+        if($exists > 0)
+            return redirect()->back()->withErrors(['card_number' => 'the card number is already registered.']);
+        
+        if($request->input('default_payment') == true)
+            CreditCard::where('user_id',Auth::id())->update(['default_payment' => null]);
+        
+        $c = new CreditCard();
+        $c->user_id = Auth::id();
+        $c->full_name = $request->input('full_name');
+        $c->card_number = $request->input('card_number');
+        $c->exp_date = $request->input('exp_date');
+        $c->cvc = $request->input('cvc');
+        $c->default_payment = $request->input('default_payment');
+        $c->save();
+
+        return Redirect::route('profile.show');
     }
 
     public function update(Request $request)
     {
         $request->validate([
             'full_name' => 'required',
-            'card_number' => 'required',
-            'exp_date' => 'required',
-            'cvc' => 'required',
-            'billing_address' => 'required',
+            'exp_date' => 'required'
         ]);
+        
+        if($request->input('default_payment') == true)
+            CreditCard::where('user_id',Auth::id())->update(['default_payment' => null]);
 
-
-        $c = CreditCard::where('user_id',Auth::id())->where('status',1)->first();
-        if(!$c)
-            $c = new CreditCard();
-                
-        $c->user_id = Auth::id();
-        $c->full_name = $request->input('full_name');
-        $c->card_number = $request->input('card_number');
-        $c->exp_date = $request->input('exp_date');
-        $c->cvc = $request->input('cvc');
-        $c->billing_address = $request->input('billing_address');
-        $c->save();
+        $c = CreditCard::where('user_id',Auth::id())->where('id',$request->input('id'))->first();        
+        if($c){
+            $c->full_name = $request->input('full_name');
+            $c->exp_date = $request->input('exp_date');
+            $c->default_payment = $request->input('default_payment');
+            $c->save();
+        }            
 
         return Redirect::route('profile.show');       
     }
@@ -57,8 +78,10 @@ class CreditCardController extends Controller
                 'password' => 'The password is incorrect.'
             ]);
         }
-        
-        CreditCard::where('user_id',Auth::id())->delete();
-        return Redirect::route('profile.show');       
+
+        CreditCard::where('user_id', Auth::id())->where('id',$request->input('id'))->delete();
+
+        return Redirect::route('profile.show');
     }
+
 }

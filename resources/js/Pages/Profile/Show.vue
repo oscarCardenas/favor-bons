@@ -5,9 +5,11 @@ import JetSectionBorder from '@/Jetstream/SectionBorder.vue';
 import LogoutOtherBrowserSessionsForm from '@/Pages/Profile/Partials/LogoutOtherBrowserSessionsForm.vue';
 import TwoFactorAuthenticationForm from '@/Pages/Profile/Partials/TwoFactorAuthenticationForm.vue';
 import UpdatePasswordForm from '@/Pages/Profile/Partials/UpdatePasswordForm.vue';
-import UpdateTheme from '@/Pages/Profile/Partials/UpdateTheme.vue';
+import UpdateThemeForm from '@/Pages/Profile/Partials/UpdateThemeForm.vue';
 import UpdateProfileInformationForm from '@/Pages/Profile/Partials/UpdateProfileInformationForm.vue';
-import UpdateCreditCardInformationForm from '@/Pages/Profile/Partials/UpdateCreditCardInformationForm.vue';
+import UpdateCreditCardInformation from '@/Pages/Profile/Partials/UpdateCreditCardInformation.vue';
+import UpdateBillingInformation from '@/Pages/Profile/Partials/UpdateBillingInformation.vue';
+
 
 defineProps({
     confirmsTwoFactorAuthentication: Boolean,
@@ -38,13 +40,19 @@ defineProps({
                 </div>
 
                 <div v-if="$page.props.jetstream.canUpdateProfileInformation">
-                    <UpdateTheme class="mt-10 sm:mt-0" :user="$page.props.user" />
+                    <UpdateThemeForm class="mt-10 sm:mt-0" :user="$page.props.user" />
 
                     <JetSectionBorder />
                 </div>
 
                 <div v-if="$page.props.jetstream.canUpdateProfileInformation">
-                    <UpdateCreditCardInformationForm />
+                    <UpdateBillingInformation class="mt-10 sm:mt-0" />
+
+                    <JetSectionBorder />
+                </div>
+
+                <div v-if="$page.props.jetstream.canUpdateProfileInformation">
+                    <UpdateCreditCardInformation class="mt-10 sm:mt-0" />
 
                     <JetSectionBorder />
                 </div>

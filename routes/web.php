@@ -47,8 +47,11 @@ Route::middleware(['auth:sanctum',config('jetstream.auth_session'),'verified',])
 
     Route::post('/user-theme', [HomeController::class, 'themeUpdate'])->name('user-theme.update');
 
-    Route::get('/user-creditcard', [CreditCardController::class, 'show'])->name('user-creditcard.show');
-    Route::post('/user-creditcard', [CreditCardController::class, 'update'])->name('user-creditcard.update');
-    Route::delete('/user-creditcard', [CreditCardController::class, 'destroy'])->name('user-creditcard.destroy');
+    Route::get('/creditcard-index', [CreditCardController::class, 'index'])->name('creditcard.index');
+    Route::post('/creditcard-store', [CreditCardController::class, 'store'])->name('creditcard.store');
+    Route::put('/creditcard-update', [CreditCardController::class, 'update'])->name('creditcard.update');
+    Route::delete('/creditcard-destroy', [CreditCardController::class, 'destroy'])->name('creditcard.destroy');
+
+    
 
 });
