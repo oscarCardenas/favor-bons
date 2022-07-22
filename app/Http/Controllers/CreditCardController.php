@@ -8,7 +8,6 @@ use Illuminate\Support\Facades\Redirect;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 
-use App\Models\User;
 use App\Models\CreditCard;
 
 use Log;
@@ -68,6 +67,14 @@ class CreditCardController extends Controller
         }            
 
         return Redirect::route('profile.show');       
+    }
+
+    public function activate(Request $request){
+        CreditCard::where('user_id',Auth::id())->update(['default_payment' => null]);
+
+        CreditCard::where('user_id',Auth::id())->where('id',$request->input('id'))->update(['default_payment' => true]);
+
+        return CreditCard::where('user_id',Auth::id())->orderBy('default_payment','asc')->get();
     }
 
     public function destroy(Request $request)

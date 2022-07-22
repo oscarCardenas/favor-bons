@@ -30,7 +30,6 @@ class CategorySeeder extends Seeder
             ['name' => 'Unique Favors', 'description' => null, 'type' => null, 'created_at' => $now]
         ];
 
-        Category::truncate();
         Category::insert($array);
 
     }

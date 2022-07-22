@@ -97,7 +97,6 @@ class SubcategorySeeder extends Seeder
             ['category_id' => 10, 'name' => 'Panerai Men’s Luxury Watch (Slightly Worn by Leading CEO)', 'description' => null, 'type' => null, 'created_at' => $now]
         ];
 
-        Subcategory::truncate();
         Subcategory::insert($array);
     }
 }
