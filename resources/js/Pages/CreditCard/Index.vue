@@ -35,10 +35,14 @@ const confirmDeleteCreditCard = (data,index) => {
 
 const SetDefaultPayment = (d,i) => {
     axios.put(route('creditcard.activate'),d).then(response => {
-        CreditCardList.value = response.data
         IndexMsg.value = i
-        setTimeout(() => IndexMsg.value = null, 2000);
+        setTimeout(() => reloadList(response.data), 100);
     })
+}
+
+const reloadList = (data) => {
+    CreditCardList.value = data
+    IndexMsg.value = null
 }
 
 const deleteCreditCard = () => {
@@ -102,7 +106,7 @@ const closeModal = () => {
             <div class="flex items-center text-left">
                 <a href="javascript:void(0);">
                     <h5 class="mb-2 text-2xl font-bold tracking-tight text-gray-900 dark:text-white">
-                        {{ c.card_number }} 
+                        **** **** **** {{ c.card_number }} 
                     </h5>
                 </a>
             </div>
@@ -121,7 +125,7 @@ const closeModal = () => {
         <div class="grid grid-cols-2 gap-2">
             <div class="flex items-center text-left">
                 <p class="mb-3 font-normal text-gray-700 dark:text-gray-400">
-                    Expire date: {{ c.exp_date }}
+                    Expire date: {{ c.mont}}/{{ c.year}}
                 </p>
             </div>
             <div class="flex items-center justify-end text-right">

@@ -80,6 +80,7 @@ const storeCreditCardInformation = () => {
                     <JetInput
                         id="card_number"
                         v-model="form.card_number"
+                        maxlength="16"
                         type="text"
                         class="mt-1 block w-full"
                     />
@@ -88,12 +89,7 @@ const storeCreditCardInformation = () => {
                 <!-- exp_date -->
                 <div class="col-span-6 sm:col-span-4">
                     <JetLabel for="exp_date" value="Expire Date" />
-                    <JetInput
-                        id="exp_date"
-                        v-model="form.exp_date"
-                        type="text"
-                        class="mt-1 block w-full"
-                    />
+                    <Datepicker v-model="form.exp_date" monthPicker autoApply />
                     <JetInputError :message="form.errors.exp_date" class="mt-2" />    
                 </div>
                 <!-- cvc -->
@@ -102,6 +98,7 @@ const storeCreditCardInformation = () => {
                     <JetInput
                         id="cvc"
                         v-model="form.cvc"
+                        maxlength="3"
                         type="password"
                         class="mt-1 block w-full"
                     />

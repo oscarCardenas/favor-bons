@@ -18,7 +18,7 @@ class CreditCardController extends Controller
     
     public function index(Request $request)
     {
-        return CreditCard::where('user_id',Auth::id())->orderBy('default_payment','asc')->get();
+        return CreditCard::getCreditCard();
     }
 
     public function store(Request $request){
@@ -29,6 +29,7 @@ class CreditCardController extends Controller
             'cvc' => 'required'
         ]);
 
+        $cardFromUser = CreditCard::where('user_id',Auth::id())->count();
         $exists = CreditCard::where('user_id',Auth::id())->where('card_number', $request->input('card_number'))->count();
         if($exists > 0)
             return redirect()->back()->withErrors(['card_number' => 'the card number is already registered.']);
@@ -39,10 +40,10 @@ class CreditCardController extends Controller
         $c = new CreditCard();
         $c->user_id = Auth::id();
         $c->full_name = $request->input('full_name');
-        $c->card_number = $request->input('card_number');
-        $c->exp_date = $request->input('exp_date');
-        $c->cvc = $request->input('cvc');
-        $c->default_payment = $request->input('default_payment');
+        $c->card_number = CreditCard::encrypt($request->input('card_number'));
+        $c->exp_date = CreditCard::formatExpireDate($request->input('exp_date'));
+        $c->cvc = CreditCard::encrypt($request->input('cvc'));
+        $c->default_payment = ($cardFromUser == 0) ? true : $request->input('default_payment');
         $c->save();
 
         return Redirect::route('profile.show');
@@ -53,15 +54,15 @@ class CreditCardController extends Controller
         $request->validate([
             'full_name' => 'required',
             'exp_date' => 'required'
-        ]);
+        ]);        
         
         if($request->input('default_payment') == true)
             CreditCard::where('user_id',Auth::id())->update(['default_payment' => null]);
-
+                
         $c = CreditCard::where('user_id',Auth::id())->where('id',$request->input('id'))->first();        
         if($c){
             $c->full_name = $request->input('full_name');
-            $c->exp_date = $request->input('exp_date');
+            $c->exp_date = CreditCard::formatExpireDate($request->input('exp_date'));
             $c->default_payment = $request->input('default_payment');
             $c->save();
         }            
@@ -74,7 +75,7 @@ class CreditCardController extends Controller
 
         CreditCard::where('user_id',Auth::id())->where('id',$request->input('id'))->update(['default_payment' => true]);
 
-        return CreditCard::where('user_id',Auth::id())->orderBy('default_payment','asc')->get();
+        return CreditCard::getCreditCard();
     }
 
     public function destroy(Request $request)

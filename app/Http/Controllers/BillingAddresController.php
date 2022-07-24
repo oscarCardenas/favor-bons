@@ -31,6 +31,8 @@ class BillingAddresController extends Controller
             'billing_address' => 'required',
         ]);
 
+        $BillingFromUser = BillingAddres::where('user_id',Auth::id())->count();
+
         $exists = BillingAddres::where('user_id',Auth::id())->where('shipping_address', $request->input('shipping_address'))->count();
         if($exists > 0)
             return redirect()->back()->withErrors(['shipping_address' => 'the shipping address is already registered.']);
@@ -46,7 +48,7 @@ class BillingAddresController extends Controller
         $c->phone_number = $request->input('phone_number');
         $c->shipping_address = $request->input('shipping_address');
         $c->billing_address = $request->input('billing_address');
-        $c->default_billing = $request->input('default_billing');
+        $c->default_billing = ($BillingFromUser == 0) ? true : $request->input('default_billing');
         $c->save();
 
         return Redirect::route('profile.show');

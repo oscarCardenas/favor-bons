@@ -17,9 +17,9 @@ return new class extends Migration
             $table->id();
             $table->bigInteger('user_id')->unsigned();
             $table->string('full_name');
-            $table->string('card_number');
-            $table->string('exp_date');
-            $table->string('cvc');
+            $table->text('card_number');
+            $table->date('exp_date');
+            $table->text('cvc');
             $table->integer('default_payment')->nullable();
             $table->timestamps();
 

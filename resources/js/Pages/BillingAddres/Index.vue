@@ -35,10 +35,14 @@ const confirmDeleteCreditCard = (data,index) => {
 
 const SetDefaultPayment = (d,i) => {
     axios.put(route('billing.activate'),d).then(response => {
-        BillingList.value = response.data
         IndexMsg.value = i
-        setTimeout(() => IndexMsg.value = null, 2000);
+        setTimeout(() => reloadList(response.data), 100);
     })
+}
+
+const reloadList = (data) => {
+    BillingList.value = data
+    IndexMsg.value = null
 }
 
 const deleteCreditCard = () => {
