@@ -35,10 +35,9 @@ const storeSupport = () => {
         </template>
 
         <div class="py-12">
-            <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
-                <div class="bg-white overflow-hidden shadow-xl sm:rounded-lg">
-                    <div class="relative flex items-top justify-center min-h-screen bg-gray-100 dark:bg-gray-900 sm:items-center sm:pt-0">
-                        
+            <div class="max-w-7xl mx-auto py-10 sm:px-6 lg:px-8">
+                <div class="mt-5 md:mt-0 md:col-span-2 shadow-xl sm:rounded-lg">
+                    <div class="relative flex px-4 py-5 bg-white items-top justify-center sm:p-6 shadow sm:rounded-md">                        
                         <form @submit.prevent="storeSupport">
                             <div class="flex sm:px-6 ">
                                 <div class="grid md:grid-cols-2 md:gap-6 mt-6">
@@ -100,6 +99,4 @@ const storeSupport = () => {
             </div>
         </div>
     </AppLayout>
-
-
 </template>

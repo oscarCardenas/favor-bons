@@ -10,6 +10,7 @@ use App\Http\Controllers\CreditCardController;
 use App\Http\Controllers\BillingAddresController;
 use App\Http\Controllers\ActiveCampaignController;
 use App\Http\Controllers\CustomerSupportController;
+use App\Http\Controllers\Auth\RegisteredUserController;
 
 /*
 |--------------------------------------------------------------------------
@@ -37,6 +38,9 @@ Route::post('/client', [ActiveCampaignController::class, 'store'])->name('client
 
 // Route::get('/login', [LoginController::class, 'create'])->name('login');
 // Route::post('/login', [LoginController::class, 'store'])->name('login.store');
+
+Route::get('/register', [RegisteredUserController::class, 'create'])->name('register.create');
+Route::post('/register', [RegisteredUserController::class, 'store'])->name('register.store');
 
 Route::middleware(['auth:sanctum',config('jetstream.auth_session'),'verified',])->group(function () {
     

@@ -7,6 +7,11 @@ import JetInput from '@/Jetstream/Input.vue';
 import JetCheckbox from '@/Jetstream/Checkbox.vue';
 import JetLabel from '@/Jetstream/Label.vue';
 import JetValidationErrors from '@/Jetstream/ValidationErrors.vue';
+import JetInputError from '@/Jetstream/InputError.vue';
+
+defineProps({
+    categories: Object, 
+});
 
 const form = useForm({
     name: '',
@@ -17,7 +22,7 @@ const form = useForm({
 });
 
 const submit = () => {
-    form.post(route('register'), {
+    form.post(route('register.store'), {
         onFinish: () => form.reset('password', 'password_confirmation'),
     });
 };
@@ -31,7 +36,11 @@ const submit = () => {
             <JetAuthenticationCardLogo />
         </template>
 
-        <JetValidationErrors class="mb-4" />
+        <!-- <JetValidationErrors class="mb-4" /> -->
+
+        <!-- <pre>
+            {{ categories }}
+        </pre> -->
 
         <form @submit.prevent="submit">
             <div>
@@ -41,12 +50,12 @@ const submit = () => {
                     v-model="form.name"
                     type="text"
                     class="mt-1 block w-full"
-                    required
                     autofocus
                     autocomplete="name"
                 />
+                <JetInputError :message="form.errors.name" class="mt-2" />
             </div>
-
+            
             <div class="mt-4">
                 <JetLabel for="email" value="Email" />
                 <JetInput
@@ -54,8 +63,8 @@ const submit = () => {
                     v-model="form.email"
                     type="email"
                     class="mt-1 block w-full"
-                    required
                 />
+                <JetInputError :message="form.errors.email" class="mt-2" />
             </div>
 
             <div class="mt-4">
@@ -65,9 +74,9 @@ const submit = () => {
                     v-model="form.password"
                     type="password"
                     class="mt-1 block w-full"
-                    required
                     autocomplete="new-password"
                 />
+                <JetInputError :message="form.errors.password" class="mt-2" />
             </div>
 
             <div class="mt-4">
@@ -77,9 +86,9 @@ const submit = () => {
                     v-model="form.password_confirmation"
                     type="password"
                     class="mt-1 block w-full"
-                    required
                     autocomplete="new-password"
                 />
+                <JetInputError :message="form.errors.password_confirmation" class="mt-2" />
             </div>
 
             <div v-if="$page.props.jetstream.hasTermsAndPrivacyPolicyFeature" class="mt-4">
