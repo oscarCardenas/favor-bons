@@ -37,16 +37,14 @@ Route::post('/client', [ActiveCampaignController::class, 'store'])->name('client
 
 Route::get('/register', [RegisteredUserController::class, 'create'])->name('register.create');
 Route::post('/register', [RegisteredUserController::class, 'store'])->name('register.store');
+Route::get('/support', [CustomerSupportController::class, 'show'])->name('support.show');
+Route::post('/support', [CustomerSupportController::class, 'store'])->name('support.store');
 Route::get('/terms', function () { return Inertia::render('TermsOfService'); })->name('terms.show');
 Route::get('/policy', function () { return Inertia::render('PrivacyPolicy'); })->name('policy.show');
 
 Route::middleware(['auth:sanctum',config('jetstream.auth_session'),'verified',])->group(function () {
     
     Route::get('/dashboard', function () { return Inertia::render('Dashboard'); })->name('dashboard');
-
-    Route::get('/support', [CustomerSupportController::class, 'show'])->name('support.show');
-    Route::post('/support', [CustomerSupportController::class, 'store'])->name('support.store');
-
     Route::post('/user-theme', [HomeController::class, 'themeUpdate'])->name('user-theme.update');
 
     Route::get('/creditcard-index', [CreditCardController::class, 'index'])->name('creditcard.index');

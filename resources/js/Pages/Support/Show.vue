@@ -1,27 +1,42 @@
 <script setup>
-import { ref } from 'vue';
-import { Head, Link } from '@inertiajs/inertia-vue3';
-import { useForm,usePage } from '@inertiajs/inertia-vue3';
+import { onMounted } from 'vue';
+// import { ref, onMounted } from 'vue';
+// import { Head, Link } from '@inertiajs/inertia-vue3';
+import { useForm } from '@inertiajs/inertia-vue3';
+// import { useForm, usePage } from '@inertiajs/inertia-vue3';
 import AppLayout from '@/Layouts/AppLayout.vue';
 
 const props = defineProps({
-    user: Object,
-    msgsuccess: String
+    user: Object
 });
 
 const form = useForm({
     _method: 'POST',
-    name: props.user.name,
-    email: props.user.email,
+    name: '',
+    email: '',
     message: ''
+});
+
+onMounted(() => {
+    if(props.user != null){
+        form.name = props.user.name;
+        form.email = props.user.email;    
+    }
 });
 
 const storeSupport = () => {
     form.post(route('support.store'), {
         errorBag: 'storeSupport',
         preserveScroll: true,
-        onSuccess: () => form.reset(),
+        onSuccess: () => resetForm(),
     });
+};
+
+const resetForm = () => {
+    if(props.user != null)
+        form.message = ''
+    else
+        form.reset()
 };
 
 </script>
@@ -49,6 +64,8 @@ const storeSupport = () => {
                                             type="text"
                                             class="mt-1 block w-full"
                                             placeholder="Enter your name"
+                                            :readonly = "props.user"
+                                            :disabledClass="(props.user) ? true : false"
                                             autocomplete="name"
                                         />
                                         <JetInputError :message="form.errors.name" class="mt-2" />
@@ -65,6 +82,8 @@ const storeSupport = () => {
                                             type="text"
                                             class="mt-1 block w-full"
                                             placeholder="Enter your Email"
+                                            :readonly = "props.user"
+                                            :disabledClass="(props.user) ? true : false"
                                             autocomplete="email"
                                         />
                                         <JetInputError :message="form.errors.email" class="mt-2" />

@@ -3,9 +3,12 @@
         Hi, you have a new customer support notification:
     </p>
     <p>
-        Name: {{ $data['name'] }} and Email: {{ $data['email'] }}
+        <b>Name:</b> {{ $data['name'] }}
     </p>
     <p>
-        {{ $data['message'] }}
+        <b>Email:</b> {{ $data['email'] }}
+    </p>
+    <p>
+        <b>Message:</b> {{ $data['message'] }}
     </p>
 </body>
