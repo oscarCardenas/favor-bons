@@ -18,6 +18,7 @@ const form = useForm({
     email: '',
     password: '',
     password_confirmation: '',
+    interest_categories: [],
     terms: false,
 });
 
@@ -91,15 +92,28 @@ const submit = () => {
                 <JetInputError :message="form.errors.password_confirmation" class="mt-2" />
             </div>
 
-            <div v-if="$page.props.jetstream.hasTermsAndPrivacyPolicyFeature" class="mt-4">
+            <div class="mt-4">
+                <JetLabel for="interest_categories" value="Interest categories" class="mb-3 mt-6"/>
+                <div class="grid grid-cols-2 gap-2">
+                    <div class="flex items-center" v-for="(c,i) in categories" :key="i">
+                        <input type="checkbox" :id="'category'+c.id" :value="c.id" v-model="form.interest_categories" class="form-check-input appearance-none h-4 w-4 border border-gray-300 rounded-sm bg-white checked:bg-blue-600 checked:border-blue-600 focus:outline-none transition duration-200 mt-1 align-top bg-no-repeat bg-center bg-contain float-left mr-2 cursor-pointer dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600">
+                        <label :for="'category'+c.id" class="ml-2 text-sm font-medium text-gray-900 dark:text-gray-300">
+                            {{ c.name}}
+                        </label>
+                    </div>
+                </div>
+                <JetInputError :message="form.errors.interest_categories" class="mt-2" />
+            </div>
+
+            <div class="mt-4">
                 <JetLabel for="terms">
                     <div class="flex items-center">
                         <JetCheckbox id="terms" v-model:checked="form.terms" name="terms" />
-
                         <div class="ml-2">
                             I agree to the <a target="_blank" :href="route('terms.show')" class="underline text-sm text-gray-600 hover:text-gray-900">Terms of Service</a> and <a target="_blank" :href="route('policy.show')" class="underline text-sm text-gray-600 hover:text-gray-900">Privacy Policy</a>
                         </div>
                     </div>
+                    <JetInputError :message="form.errors.terms" class="mt-2" />
                 </JetLabel>
             </div>
 

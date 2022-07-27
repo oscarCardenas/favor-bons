@@ -27,12 +27,7 @@ class CreditCard extends Model
         foreach ($res as $k => $v) {
             $r[$k] = json_decode($v,true);
 
-            $card_number = self::decrypt($v->card_number);
-
-            \Log::info($v->card_number);
-            \Log::info($card_number);
-            \Log::info("----------");
-            
+            $card_number = self::decrypt($v->card_number);            
             $mont = Carbon::parse($v->exp_date)->format('m');
             $year = Carbon::parse($v->exp_date)->format('Y');
             $r[$k]['mont'] = $mont;

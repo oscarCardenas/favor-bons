@@ -58,4 +58,25 @@ class User extends Authenticatable
     protected $appends = [
         'profile_photo_url',
     ];
+
+    public function billingAddres()
+    {
+        return $this->hasMany(BillingAddres::class, 'user_id', 'id');
+    }
+    
+    public function creditCard()
+    {
+        return $this->hasMany(CreditCard::class, 'user_id', 'id');
+    }
+    
+    public function favorBond()
+    {
+        return $this->hasMany(FavorBond::class, 'user_id', 'id');
+    }
+    
+    public function interestCategory()
+    {
+        return $this->hasMany(InterestCategory::class, 'user_id', 'id');
+    }
+
 }

@@ -17,7 +17,11 @@ defineProps({
                     <JetAuthenticationCardLogo />
                 </div>
 
-                <div class="w-full sm:max-w-2xl mt-6 p-6 bg-white shadow-md overflow-hidden sm:rounded-lg prose" v-html="terms" />
+                <!-- <div class="w-full sm:max-w-2xl mt-6 p-6 bg-white shadow-md overflow-hidden sm:rounded-lg prose" v-html="terms" /> -->
+                <div class="w-full sm:max-w-2xl mt-6 p-6 bg-white shadow-md overflow-hidden sm:rounded-lg prose">
+                    Lorem ipsum dolor sit amet consectetur adipisicing elit. Quo itaque, expedita minima fuga et minus dicta 
+                    recusandae est quam inventore ratione unde accusantium provident eligendi. Atque facilis laborum fugiat quas.
+                </div>
             </div>
         </div>
     </div>

@@ -5,11 +5,11 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class FavorBons extends Model
+class InterestCategory extends Model
 {
     use HasFactory;
 
-    protected $table = 'favor_bons';
+    protected $table = 'interest_categories';
     protected $primaryKey = 'id';
     
 }

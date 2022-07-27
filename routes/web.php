@@ -33,14 +33,12 @@ use App\Http\Controllers\Auth\RegisteredUserController;
 // });
 
 Route::get('/', [PublicController::class, 'index'])->name('public.index');
-// Route::get('/categories', [PublicController::class, 'categories'])->name('public.categories');
 Route::post('/client', [ActiveCampaignController::class, 'store'])->name('client.store');
-
-// Route::get('/login', [LoginController::class, 'create'])->name('login');
-// Route::post('/login', [LoginController::class, 'store'])->name('login.store');
 
 Route::get('/register', [RegisteredUserController::class, 'create'])->name('register.create');
 Route::post('/register', [RegisteredUserController::class, 'store'])->name('register.store');
+Route::get('/terms', function () { return Inertia::render('TermsOfService'); })->name('terms.show');
+Route::get('/policy', function () { return Inertia::render('PrivacyPolicy'); })->name('policy.show');
 
 Route::middleware(['auth:sanctum',config('jetstream.auth_session'),'verified',])->group(function () {
     

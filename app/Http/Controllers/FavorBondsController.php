@@ -3,9 +3,9 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use App\Models\FavorBons;
+use App\Models\FavorBond;
 
-class FavorBonsController extends Controller
+class FavorBondsController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -15,8 +15,8 @@ class FavorBonsController extends Controller
      */
     public function index($subcategory)
     {
-        $favorbons = FavorBons::where('subcategory_id', $subcategory)->get();
-        return Inertia::render('FavorBons/Index',['favorbons' => $favorbons]);
+        $favorbonds = FavorBond::where('subcategory_id', $subcategory)->get();
+        return Inertia::render('FavorBonds/Index',['favorbonds' => $favorbonds]);
     }
 
     /**

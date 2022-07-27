@@ -13,4 +13,9 @@ class Subcategory extends Model
 
     protected $primaryKey = 'id';
 
+    public function favorBond()
+    {
+        return $this->hasMany(FavorBond::class, 'subcategory_id', 'id');
+    }
+
 }
