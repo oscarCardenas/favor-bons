@@ -42,28 +42,40 @@ defineProps({
                             </template>
                         </div>
 
-                        <div class="max-w-6xl mx-auto sm:px-6 lg:px-8">
-                            
-                            <div class="mt-8 dark:bg-gray-800">
-
+                        <div class="bg-white sm:p-6 shadow sm:rounded-md">
+                            <div class="grid grid-cols-3 gap-3 pl-8 pr-8 ml-8 mr-8">
                                 <div v-for="(c,i) in categories" :key="i" class="mt-8 p-6 bg-white border border-gray-200 shadow-md dark:bg-gray-800 dark:border-gray-700">
-                                    <a href="#">
-                                        <h5 class="mb-2 text-2xl font-bold tracking-tight text-gray-900 dark:text-white">
-                                            {{ c.name }}
-                                        </h5>
-                                    </a>
-                                    <p class="mb-3 font-normal text-gray-700 dark:text-gray-400">Here are the biggest enterprise technology acquisitions of 2021 so far, in reverse chronological order.</p>
-                                    <a href="#" class="inline-flex items-center py-2 px-3 text-sm font-medium text-center text-white bg-blue-700 rounded-lg hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">
-                                        Read more
-                                        <svg class="ml-2 -mr-1 w-4 h-4" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M10.293 3.293a1 1 0 011.414 0l6 6a1 1 0 010 1.414l-6 6a1 1 0 01-1.414-1.414L14.586 11H3a1 1 0 110-2h11.586l-4.293-4.293a1 1 0 010-1.414z" clip-rule="evenodd"></path></svg>
-                                    </a>
+                                    <div class="h-80">
+                                        <a href="#">
+                                            <h5 class="mb-2 text-2xl font-bold tracking-tight text-gray-900 dark:text-white">
+                                                {{ c.name }}
+                                            </h5>
+                                        </a>
+                                        <div class="mt-8">
+                                            <p  v-for="(sub,s) in c.sub_category" :key="s" class="mb-3 font-normal text-gray-700 dark:text-gray-400">
+                                                <div class="flex" v-if="s < 3">
+                                                    <span class="mr-3">
+                                                        <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                                                            <path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7" />
+                                                        </svg>
+                                                    </span>
+                                                    <span>
+                                                        {{ sub.name }}
+                                                    </span>
+                                                </div>
+                                            </p>
+                                        </div>
+                                    </div>
+                                    <div class="flex">
+                                        <a href="#" class="w-full h-12 px-6 py-3 px-3 text-sm font-medium text-center text-white bg-blue-700 rounded-lg hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">
+                                            View All
+                                        </a>
+                                    </div>
                                 </div>
-                            
                             </div>
-
                         </div>
+                        
                     </div>
-
                 </div>
             </div>
         </div>

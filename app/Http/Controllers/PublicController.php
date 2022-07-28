@@ -14,7 +14,7 @@ class PublicController extends Controller
 
     public function index(Request $request)
     {
-        return Inertia::render('Public/Index',['categories' => Category::all()]);
+        return Inertia::render('Public/Index',['categories' => Category::getCategories()]);
     }
 
 }

@@ -13,18 +13,20 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('favor_bons', function (Blueprint $table) {
+        Schema::create('favorbonds', function (Blueprint $table) {
             $table->id();
             $table->bigInteger('subcategory_id')->unsigned();
             $table->bigInteger('user_id')->unsigned();            
             $table->string('title');
-            $table->string('description');
-            $table->string('qualified_description');
+            $table->text('description')->nullable();;
+            $table->text('qualified_description')->nullable();;
             $table->string('price');
-            $table->string('price_description');
-            $table->string('stock');
+            $table->text('price_description')->nullable();;
+            $table->integer('execution_of_favor_id');
+            $table->integer('unlimited')->nullable();
+            $table->integer('stock')->nullable();
             $table->string('image')->nullable();
-
+            $table->integer('status')->default(1);
             $table->timestamps();
 
             $table->foreign('subcategory_id')->references('id')->on('subcategories')
@@ -32,6 +34,10 @@ return new class extends Migration
                 ->onUpdate('cascade');
             
             $table->foreign('user_id')->references('id')->on('users')
+                ->onDelete('cascade')
+                ->onUpdate('cascade');
+
+            $table->foreign('execution_of_favor_id')->references('id')->on('execution_of_favor')
                 ->onDelete('cascade')
                 ->onUpdate('cascade');
 
@@ -45,6 +51,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('favor_bons');
+        Schema::dropIfExists('favorbonds');
     }
 };

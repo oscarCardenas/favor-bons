@@ -17,4 +17,10 @@ class Category extends Model
     {
         return $this->hasMany(Subcategory::class, 'category_id', 'id');
     }
+
+    public static function getCategories(){
+        return self::with(['subCategory' => function($query){
+            $query->where('status',1)->orderBy('name');
+        }])->where('status',1)->get();
+    }
 }

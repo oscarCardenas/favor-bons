@@ -6,6 +6,7 @@ use Inertia\Inertia;
 
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\PublicController;
+use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\CreditCardController;
 use App\Http\Controllers\BillingAddresController;
 use App\Http\Controllers\ActiveCampaignController;
@@ -41,6 +42,8 @@ Route::get('/support', [CustomerSupportController::class, 'show'])->name('suppor
 Route::post('/support', [CustomerSupportController::class, 'store'])->name('support.store');
 Route::get('/terms', function () { return Inertia::render('TermsOfService'); })->name('terms.show');
 Route::get('/policy', function () { return Inertia::render('PrivacyPolicy'); })->name('policy.show');
+
+Route::get('/categories', [CategoryController::class, 'index'])->name('categories.index');
 
 Route::middleware(['auth:sanctum',config('jetstream.auth_session'),'verified',])->group(function () {
     
