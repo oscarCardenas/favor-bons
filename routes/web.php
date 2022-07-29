@@ -43,7 +43,7 @@ Route::post('/support', [CustomerSupportController::class, 'store'])->name('supp
 Route::get('/terms', function () { return Inertia::render('TermsOfService'); })->name('terms.show');
 Route::get('/policy', function () { return Inertia::render('PrivacyPolicy'); })->name('policy.show');
 
-Route::get('/categories', [CategoryController::class, 'index'])->name('categories.index');
+Route::get('/categories', [CategoryController::class, 'public'])->name('categories.public');
 
 Route::middleware(['auth:sanctum',config('jetstream.auth_session'),'verified',])->group(function () {
     

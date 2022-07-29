@@ -12,14 +12,18 @@ class FavorBond extends Model
     protected $table = 'favorbonds';
     protected $primaryKey = 'id';
     
-    public static function getFavorBonds(){
-        return self::select('favorbonds.title','categories.name','favorbonds.price')
-        ->join('subcategories','favorbonds.subcategory_id','=','subcategories.id') 
-        ->join('categories','subcategories.category_id','=','categories.id') 
-        ->where('favorbonds.status',1)
-        ->where('categories.status',1)
-        ->where('subcategories.status',1)
-        ->get();
+    public static function getFavorBonds($id){
+        $r = self::select('favorbonds.title','favorbonds.description','categories.name','favorbonds.price','favorbonds.updated_at')
+            ->join('subcategories','favorbonds.subcategory_id','=','subcategories.id') 
+            ->join('categories','subcategories.category_id','=','categories.id') 
+            ->where('favorbonds.status',1)
+            ->where('categories.status',1)
+            ->where('subcategories.status',1);
+
+        if($id)
+            $r->where('categories.id',$id);
+
+        return $r->get();
     }
 
 }

@@ -143,7 +143,7 @@ const logout = () => {
                                             Profile
                                         </JetDropdownLink>
 
-                                        <JetDropdownLink :href="route('categories.index')">
+                                        <JetDropdownLink :href="route('categories.public')">
                                             Categories
                                         </JetDropdownLink>
 

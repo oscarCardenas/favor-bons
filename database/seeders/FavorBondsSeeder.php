@@ -28,7 +28,9 @@ class FavorBondsSeeder extends Seeder
             'execution_of_favor_id' => 1,
             'unlimited' => 1,
             'stock' => null,
-            'image' => null
+            'image' => null,
+            'created_at' => $now,
+            'updated_at' => $now,
         ];
 
         $array = [];

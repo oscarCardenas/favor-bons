@@ -25,8 +25,13 @@ import JetDangerButton from '@/Jetstream/DangerButton.vue';
 import JetSecondaryButton from '@/Jetstream/SecondaryButton.vue';
 import JetConfirmsPassword from '@/Jetstream/ConfirmsPassword.vue';
 
+/** datepicker */
 import '@vuepic/vue-datepicker/dist/main.css'
 import Datepicker from '@vuepic/vue-datepicker';
+/** select2 */
+// import Select2 from 'vue3-select2-component';
+import "vue-select/dist/vue-select.css";
+import vSelect from "vue-select";
 
 const appName = window.document.getElementsByTagName('title')[0]?.innerText || 'Laravel';
 
@@ -57,6 +62,8 @@ createInertiaApp({
             .component('JetSecondaryButton', JetSecondaryButton)
             .component('JetConfirmsPassword', JetConfirmsPassword)
             .component('Datepicker', Datepicker)
+            // .component('Select2', Select2)
+            .component("v-select", vSelect)
             .mount(el);
     },
 });
