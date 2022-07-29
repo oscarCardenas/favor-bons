@@ -23,22 +23,24 @@ class FavorBondsSeeder extends Seeder
             'user_id' => 1,
             'description' => 'Lorem ipsum dolor, sit amet consectetur adipisicing elit. Quod soluta minima tempora libero itaque nisi doloribus eius omnis quibusdam placeat, nam neque repellat cupiditate expedita, dolor in aliquam commodi accusantium.',
             'qualified_description' => 'Lorem ipsum dolor, sit amet consectetur adipisicing elit. Quod soluta minima tempora libero itaque nisi doloribus eius omnis.',
-            'price' => '1',
             'price_description' => 'Lorem ipsum dolor, sit amet consectetur adipisicing elit.',
-            'execution_of_favor_id' => 1,
             'unlimited' => 1,
             'stock' => null,
             'image' => null,
-            'created_at' => $now,
-            'updated_at' => $now,
+            'created_at' => $now
         ];
 
         $array = [];
-        for ($i=0; $i < 200; $i++) {
+        for ($i=0; $i < 150; $i++) {
             $subcategory_id = rand(1, 68);
             $array[$i] = $data;
             $array[$i]['title'] = 'Favorbonds ' . $i;
             $array[$i]['subcategory_id'] = $subcategory_id;
+            $array[$i]['price'] = rand(1, 4);
+            $array[$i]['execution_of_favor_id'] = rand(1, 4);
+            // sleep(5);
+            $array[$i]['updated_at'] = Carbon::now();
+            // FavorBond::insert($array[$i]);
         }
 
         FavorBond::insert($array);

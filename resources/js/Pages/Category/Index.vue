@@ -1,44 +1,84 @@
 <script setup>
-import { ref } from 'vue';
-import { computed, reactive } from "vue";
+import { ref, onMounted, watch, computed, reactive } from 'vue';
+import { useForm } from '@inertiajs/inertia-vue3';
+import { Inertia } from '@inertiajs/inertia';
 import AppLayout from '@/Layouts/AppLayout.vue';
 
 const props = defineProps({
     favorbonds: Object,
-    id: String,
+    categories: Object,
+    category_id: String,
 });
 
 const el = ref()
-const myValue = ref(null);
-const myOptions = ref([
-    {id: 1, text: "value 1"},
-    {id: 2, text: "value 2"},
-    {id: 3, text: "value 3"},
-]);
-
-const state = reactive({
-    search: null,
-    array: [
-        { id: 1, title: "Thanos", content: "123" },
-        { id: 2, title: "Deadpool", content: "456" },
-        { id: 3, title: "Batman", content: "789" },
-    ],
+const paginate = reactive ({
+    currentSort: 'name',
+    currentSortDir: 'asc',
+    gridData: [],
+    dataPerPage: 25,
+    currentPage: 1,
+    filterDatalength: 0,
+    search: ''
 });
 
-const filter = computed(() => {
-    if (state.search) {
-        //console.log('check2a')
-        return state.array.filter((item) => {
-            return state.search
-                .toLowerCase()
-                .split(" ")
-                .every((v) => item.title.toLowerCase().includes(v));
-        });
-    } else {
-        console.log("check2b");
-        return state.array;
+onMounted(() => {
+    paginate.gridData = props.favorbonds;
+    categoryId.value = props.category_id;
+    setTimeout(() => reload.value = true, 1000);
+});
+
+const reload = ref(false)
+const categoryId = ref(null)
+const form = useForm({ category_id: '' });
+watch(categoryId, (NewcategoryId) => {
+    if(reload.value == true){
+        form.category_id = categoryId.value;
+        form.get(route('categories.public'));
     }
 });
+
+const filterOption = computed(() => {
+    let datos = paginate.gridData.sort((a, b) => {
+        let modifier = 1;
+        if (paginate.currentSortDir === "desc") modifier = -1;
+        if (a[paginate.currentSort] < b[paginate.currentSort]) return -1 * modifier;
+        if (a[paginate.currentSort] > b[paginate.currentSort]) return 1 * modifier;
+        return 0;
+    }).filter((item) => {
+        let title = item.title.toLowerCase()
+        let searchTitle = title.includes(paginate.search.toLowerCase());
+        return searchTitle;
+    });
+    paginate.filterDatalength = datos.length;
+    return datos;            
+});
+
+const changePage = (current, next, direction) => {
+    if (direction == 'left' && paginate.currentPage == 1) {
+        return;
+    } else if (direction == 'right' && (((paginate.currentPage * paginate.dataPerPage) -
+        paginate.dataPerPage + 1 + paginate.dataPerPage) > paginate.filterDatalength)) {
+        return;
+    }
+    paginate.currentPage = next;
+};
+
+const display_page = (i) => {
+    let from = (paginate.currentPage - 1) * paginate.dataPerPage;
+    let to = paginate.currentPage * paginate.dataPerPage;
+
+    if (i >= from && i < to) {
+        return true;
+    }
+    return false;
+};
+
+const sort = (s) => {
+    if (s === paginate.currentSort) {
+        paginate.currentSortDir = paginate.currentSortDir === "asc" ? "desc" : "asc";
+    }
+    paginate.currentSort = s;
+};
 
 </script>
 
@@ -53,88 +93,154 @@ const filter = computed(() => {
         <div class="max-w-7xl mx-auto py-10 sm:px-6 lg:px-8">
             <div class="bg-white sm:p-6 shadow sm:rounded-md">
 
-                <!-- <div class="flex mt-8 mb-8">
-
-                    <div class="grid grid-cols-3">
-                        <div class="flex">
-                            <v-select 
-                                :options="myOptions" 
-                                v-model="myValue" 
-                                label="text" 
-                                placeholder="select..." 
-                                :reduce="(option) => option.id"
-                            ></v-select>
+                <!-- <div v-for="(f,i) in favorbonds" :key="i" class="p-8 bg-white border border-gray-200 shadow-md dark:bg-gray-800 dark:border-gray-700">
+                    <div class="flex">
+                        <div class="grow">
+                            <h5 class="text-xl font-bold tracking-tight text-gray-900 dark:text-white">
+                                {{ f.title }}
+                            </h5>
                         </div>
-                        <div>
-                            <input class="search-field textfield-closed" type="text" placeholder="Search" v-model="state.search" />
+                        <div class="flex-none w-1/6">
+                            <p class="font-normal text-gray-700 dark:text-gray-400">
+                                Price: {{ f.price }} Favor 
+                            </p>
                         </div>
-                        <div>
-                            <p>{{ state.array }}</p>
+                        <div class="flex-none w-1/5">
+                            <p class="font-normal text-gray-700 dark:text-gray-400">
+                                Published: {{ f.updated_at }}
+                            </p>
                         </div>
-
-                        <br>
-                        <h4>Value: {{ myValue }}</h4>
-
                     </div>
-
+                    <div class="flex mt-1">
+                        <div class="flex-none w-1/5">
+                            <a href="#">
+                                <p class="font-normal text-gray-700 dark:text-gray-400">
+                                    Category: {{ f.name }} 
+                                </p>
+                            </a>
+                        </div>
+                        <div class="grow">
+                            <p class="font-normal text-gray-700 dark:text-gray-400">
+                                {{ f.description.substring(0, 150) }}...
+                            </p>
+                        </div>
+                    </div>
                 </div> -->
 
+
+
+
+                <div class="flex">
+                    <div class="flex-none w-1/4 mt-1 mr-8">
+                        <select name="categories" id="categories" v-model="categoryId" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
+                            <option value="" selected>All categories</option>
+                            <option v-for="(c,i) in categories" :value="c.id" :key="i">{{c.name}}</option>
+                        </select>
+                    </div>
+                    <div class="grow mr-8">
+                        <JetInput
+                            id="seach"
+                            v-model="paginate.search"
+                            type="text"
+                            class="mt-1 block w-full"
+                            placeholder="Search..."
+                            autocomplete="seach"
+                        />
+                    </div>
+                    <div class="flex-none w-1/4 ml-8 mt-4">
+                        <div class="flex items-end">
+                            <span v-if="paginate.filterDatalength <= paginate.dataPerPage">
+                                {{ paginate.currentPage }} - {{ paginate.filterDatalength }} de {{ paginate.filterDatalength }}
+                            </span>
+                            <span v-else-if="paginate.currentPage==1">
+                                {{ paginate.currentPage }} - {{ paginate.dataPerPage }} de {{ paginate.filterDatalength }}
+                            </span>
+                            <span v-else-if="((paginate.currentPage*paginate.dataPerPage) - paginate.dataPerPage+1 + paginate.dataPerPage) >
+                            paginate.filterDatalength">
+                                {{ (paginate.currentPage*paginate.dataPerPage) - paginate.dataPerPage+1 }} - {{ paginate.filterDatalength }}
+                                de {{ paginate.filterDatalength }}
+                            </span>
+                            <span v-else>
+                                {{ (paginate.currentPage*paginate.dataPerPage) - paginate.dataPerPage+1 }} -
+                                {{ paginate.currentPage*paginate.dataPerPage }} de {{ paginate.filterDatalength }}
+                            </span>
+                            <button class="arrow-btn"
+                                    @click="changePage(paginate.currentPage,(paginate.currentPage-1), 'left')">
+                                <div class="arrow arrow-left" :class="{ disabled: (paginate.currentPage===1 ||
+                                paginate.filterDatalength <= paginate.dataPerPage) }">
+                                <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                                    <path stroke-linecap="round" stroke-linejoin="round" d="M15 19l-7-7 7-7" />
+                                </svg>
+                                </div>
+                            </button> 
+                            <button class="arrow-btn"
+                                    @click="changePage(paginate.currentPage,(paginate.currentPage+1), 'right')">
+                                <div class="arrow arrow-right"
+                                        :class="{ disabled: (
+                                        (paginate.currentPage*paginate.dataPerPage)-(paginate.dataPerPage-1) == paginate.filterDatalength ||
+                                        ((paginate.currentPage*paginate.dataPerPage) - paginate.dataPerPage+1 + paginate.dataPerPage)
+                                        > paginate.filterDatalength)}">
+                                            <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                                                <path stroke-linecap="round" stroke-linejoin="round" d="M9 5l7 7-7 7" />
+                                            </svg>
+
+                                </div>
+                            </button>
+                        </div>
+                    </div>
+                </div>
                 <ul class="list-outside ...">
                     <li class="mt-4">
-                        <div class="grid grid-cols-3 gap-3 pl-8 pr-8 ml-8 mr-8">
-                            <div><h5 class="font-medium font-bold leading-tight text-xl mt-0 mb-2">Category</h5></div>
-                            <div><h5 class="font-medium font-bold leading-tight text-xl mt-0 mb-2">Favor</h5></div>
-                            <div><h5 class="font-medium font-bold leading-tight text-xl mt-0 mb-2">Price</h5></div>
+                        <div class="grid grid-cols-4 gap-4 pl-8 pr-8 ml-8 mr-8">
+                            <div class="flex" @click="sort('name')">
+                                <h5 class="font-medium font-bold leading-tight text-xl mt-0 mb-2">Category</h5>
+                                <div v-if="paginate.currentSort == 'name'" class="ml-2 mt-1">
+                                    <svg v-if="paginate.currentSortDir == 'asc'" xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                                        <path stroke-linecap="round" stroke-linejoin="round" d="M19 9l-7 7-7-7" />
+                                    </svg>
+                                    <svg v-if="paginate.currentSortDir == 'desc'" xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                                        <path stroke-linecap="round" stroke-linejoin="round" d="M5 15l7-7 7 7" />
+                                    </svg>
+                                </div>
+                            </div>
+                            <div class="flex" @click="sort('title')">
+                                <h5 class="font-medium font-bold leading-tight text-xl mt-0 mb-2">Favor</h5>
+                                <div v-if="paginate.currentSort == 'title'" class="ml-2 mt-1">
+                                    <svg v-if="paginate.currentSortDir == 'asc'" xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                                        <path stroke-linecap="round" stroke-linejoin="round" d="M19 9l-7 7-7-7" />
+                                    </svg>
+                                    <svg v-if="paginate.currentSortDir == 'desc'" xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                                        <path stroke-linecap="round" stroke-linejoin="round" d="M5 15l7-7 7 7" />
+                                    </svg>
+                                </div>
+                            </div>
+                            <div class="flex" @click="sort('price')">
+                                <h5 class="font-medium font-bold leading-tight text-xl mt-0 mb-2">Price</h5>
+                                <div v-if="paginate.currentSort == 'price'" class="ml-2 mt-1">
+                                    <svg v-if="paginate.currentSortDir == 'asc'" xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                                        <path stroke-linecap="round" stroke-linejoin="round" d="M19 9l-7 7-7-7" />
+                                    </svg>
+                                    <svg v-if="paginate.currentSortDir == 'desc'" xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                                        <path stroke-linecap="round" stroke-linejoin="round" d="M5 15l7-7 7 7" />
+                                    </svg>
+                                </div>
+                            </div>
+                            <div class="flex" @click="sort('updated_at')">
+                                <h5 class="font-medium font-bold leading-tight text-xl mt-0 mb-2">Published</h5>
+                                <div v-if="paginate.currentSort == 'updated_at'" class="ml-2 mt-1">
+                                    <svg v-if="paginate.currentSortDir == 'asc'" xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                                        <path stroke-linecap="round" stroke-linejoin="round" d="M19 9l-7 7-7-7" />
+                                    </svg>
+                                    <svg v-if="paginate.currentSortDir == 'desc'" xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                                        <path stroke-linecap="round" stroke-linejoin="round" d="M5 15l7-7 7 7" />
+                                    </svg>
+                                </div>
+                            </div>
                         </div>
                     </li>
                     <div class="border-t border-gray-100 mt-4" />
-
-
-
-                    <div v-for="(f,i) in favorbonds" :key="i" class="p-8 bg-white border border-gray-200 shadow-md dark:bg-gray-800 dark:border-gray-700">
-                        <div class="flex">
-                            <div class="grow">
-                                <h5 class="text-xl font-bold tracking-tight text-gray-900 dark:text-white">
-                                    {{ f.title }}
-                                </h5>
-                            </div>
-                            <div class="flex-none w-1/6">
-                                <p class="font-normal text-gray-700 dark:text-gray-400">
-                                    {{ f.price }} 
-                                </p>
-                            </div>
-                            <div class="flex-none w-1/5">
-                                <p class="font-normal text-gray-700 dark:text-gray-400">
-                                    {{ f.updated_at }} <br>
-                                    
-
-                                    
-
-
-
-                                </p>
-                            </div>
-                        </div>
-                        <div class="flex mt-1">
-                            <div class="flex-none w-1/5">
-                                <a href="#">
-                                    <p class="font-normal text-gray-700 dark:text-gray-400">
-                                        Category: {{ f.name }} 
-                                    </p>
-                                </a>
-                            </div>
-                            <div class="grow">
-                                <p class="font-normal text-gray-700 dark:text-gray-400">
-                                    {{ f.description.substring(0, 100) }}...
-                                </p>
-                            </div>
-                        </div>
-                    </div>
-
-                    <li v-for="(f,i) in favorbonds" :key="i">
-
-
-                        <div class="grid grid-cols-3 gap-3 pl-8 pr-8 ml-8 mr-8 mt-4">
+                    <li v-for="(f,i) in filterOption" :key="i">
+                        <div class="grid grid-cols-4 gap-4 pl-8 pr-8 ml-8 mr-8 mt-4" v-if="display_page(i)">
                             <a href="javascript:void(0);">
                                 <h6 class="font-medium leading-tight text-base mt-0 mb-2">
                                     {{ f.name }} 
@@ -147,11 +253,16 @@ const filter = computed(() => {
                             </a>
                             <a href="javascript:void(0);">
                                 <h6 class="font-medium leading-tight text-base mt-0 mb-2">
-                                    {{ f.price }} 
+                                    {{ f.price }} Favor
+                                </h6>
+                            </a>
+                            <a href="javascript:void(0);">
+                                <h6 class="font-medium leading-tight text-base mt-0 mb-2">
+                                    {{ f.updated_at }} 
                                 </h6>
                             </a>
                         </div>
-                        <div class="border-t border-gray-100 mt-4" />
+                        <div class="border-t border-gray-100 mt-4" v-if="display_page(i)" />
                     </li>
                 </ul>
             </div>

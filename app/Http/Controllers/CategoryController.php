@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Redirect;
 use Inertia\Inertia;
 
+use App\Models\Category;
 use App\Models\FavorBond;
 
 use Log;
@@ -45,7 +46,11 @@ class CategoryController extends Controller
 
     public function public(Request $request)
     {
-        return Inertia::render('Category/Index',['favorbonds' => FavorBond::getFavorBonds($request->input('id'))]);
+        return Inertia::render('Category/Index',[
+            'favorbonds' => FavorBond::getFavorBonds($request->input('category_id')), 
+            'categories' => Category::where('status',1)->get(),
+            'category_id' => $request->input('category_id')
+        ]);
     }
 
 }

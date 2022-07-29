@@ -29,7 +29,6 @@ import JetConfirmsPassword from '@/Jetstream/ConfirmsPassword.vue';
 import '@vuepic/vue-datepicker/dist/main.css'
 import Datepicker from '@vuepic/vue-datepicker';
 /** select2 */
-// import Select2 from 'vue3-select2-component';
 import "vue-select/dist/vue-select.css";
 import vSelect from "vue-select";
 
