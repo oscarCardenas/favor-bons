@@ -22,7 +22,7 @@ return new class extends Migration
             $table->text('qualified_description')->nullable();;
             $table->string('price');
             $table->text('price_description')->nullable();;
-            $table->integer('execution_of_favor_id');
+            $table->bigInteger('execution_of_favor_id')->unsigned();
             $table->integer('unlimited')->nullable();
             $table->integer('stock')->nullable();
             $table->string('image')->nullable();
