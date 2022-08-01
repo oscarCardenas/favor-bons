@@ -135,6 +135,10 @@ const logout = () => {
                                             Manage Account
                                         </div>
 
+                                        <JetDropdownLink :href="route('favorbons.show')">
+                                            My Favor Bons
+                                        </JetDropdownLink>
+
                                         <JetDropdownLink :href="route('support.show')">
                                             Customer Support
                                         </JetDropdownLink>

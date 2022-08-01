@@ -12,6 +12,7 @@ use App\Http\Controllers\BillingAddresController;
 use App\Http\Controllers\ActiveCampaignController;
 use App\Http\Controllers\CustomerSupportController;
 use App\Http\Controllers\Auth\RegisteredUserController;
+use App\Http\Controllers\FavorBonds\ShowFavorBondsController;
 use App\Http\Controllers\Auth\AuthenticatedSessionController;
 
 /*
@@ -66,5 +67,7 @@ Route::middleware(['auth:sanctum',config('jetstream.auth_session'),'verified',])
     Route::put('/billing-update', [BillingAddresController::class, 'update'])->name('billing.update');
     Route::put('/billing-activate', [BillingAddresController::class, 'activate'])->name('billing.activate');
     Route::delete('/billing-destroy', [BillingAddresController::class, 'destroy'])->name('billing.destroy');
+
+    Route::get('/favorbons', ShowFavorBondsController::class )->name('favorbons.show');
 
 });
