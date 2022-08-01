@@ -79,4 +79,13 @@ class User extends Authenticatable
         return $this->hasMany(InterestCategory::class, 'user_id', 'id');
     }
 
+    public static function searchUser($email){
+        $r = self::join('users_profiles', 'users.id', '=', 'users_profiles.user_id')
+            ->where('users.email',$email)
+            ->where('users_profiles.profile_id',1)
+            ->count();
+
+        return ($r > 0) ? true : false;
+    }
+
 }

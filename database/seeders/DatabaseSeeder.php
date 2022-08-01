@@ -19,7 +19,8 @@ class DatabaseSeeder extends Seeder
             CategorySeeder::class,
             SubcategorySeeder::class,
             ExecutionOfFavorSeeder::class,
-            FavorBondsSeeder::class
+            FavorBondsSeeder::class,
+            ProfileSeeder::class,
         ]);
     }
 }
