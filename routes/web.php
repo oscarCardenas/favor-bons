@@ -12,6 +12,7 @@ use App\Http\Controllers\BillingAddresController;
 use App\Http\Controllers\ActiveCampaignController;
 use App\Http\Controllers\CustomerSupportController;
 use App\Http\Controllers\Auth\RegisteredUserController;
+use App\Http\Controllers\Auth\AuthenticatedSessionController;
 
 /*
 |--------------------------------------------------------------------------
@@ -38,6 +39,11 @@ Route::post('/client', [ActiveCampaignController::class, 'store'])->name('client
 
 Route::get('/register', [RegisteredUserController::class, 'create'])->name('register.create');
 Route::post('/register', [RegisteredUserController::class, 'store'])->name('register.store');
+
+Route::get('/login', [AuthenticatedSessionController::class, 'create'])->name('login');
+Route::post('/login', [AuthenticatedSessionController::class, 'store'])->name('login.store');
+Route::post('/logout', [AuthenticatedSessionController::class, 'destroy'])->name('logout');
+
 Route::get('/support', [CustomerSupportController::class, 'show'])->name('support.show');
 Route::post('/support', [CustomerSupportController::class, 'store'])->name('support.store');
 Route::get('/terms', function () { return Inertia::render('TermsOfService'); })->name('terms.show');
