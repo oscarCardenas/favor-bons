@@ -7,7 +7,7 @@ import AppLayout from '@/Layouts/AppLayout.vue';
 const props = defineProps({
     favorbonds: Object,
     categories: Object,
-    category_id: String,
+    subcategory_id: String,
 });
 
 const el = ref()
@@ -23,17 +23,17 @@ const paginate = reactive ({
 
 onMounted(() => {
     paginate.gridData = props.favorbonds;
-    categoryId.value = props.category_id;
+    subcategoryId.value = props.subcategory_id;
     setTimeout(() => reload.value = true, 1000);
 });
 
 const reload = ref(false)
-const categoryId = ref(null)
-const form = useForm({ category_id: '' });
-watch(categoryId, (NewcategoryId) => {
+const subcategoryId = ref(null)
+const form = useForm({ subcategory_id: '' });
+watch(subcategoryId, (NewcategoryId) => {
     if(reload.value == true){
-        form.category_id = categoryId.value;
-        form.get(route('categories.public'));
+        form.subcategory_id = subcategoryId.value;
+        form.get(route('subcategories.public'));
     }
 });
 
@@ -83,10 +83,10 @@ const sort = (s) => {
 </script>
 
 <template>
-    <AppLayout title="Categories">
+    <AppLayout title="Subcategories">
         <template #header>
             <h2 class="font-semibold text-xl text-gray-800 leading-tight">
-                Categories
+                Subcategories
             </h2>
         </template>
 
@@ -94,9 +94,11 @@ const sort = (s) => {
             <div class="bg-white sm:p-6 shadow sm:rounded-md">
                 <div class="flex">
                     <div class="flex-none w-1/4 mt-1 mr-8">
-                        <select name="categories" id="categories" v-model="categoryId" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
-                            <option value="" selected>All categories</option>
-                            <option v-for="(c,i) in categories" :value="c.id" :key="i">{{c.name}}</option>
+                        <select name="subcategories" id="subcategories" v-model="subcategoryId" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
+                            <option value="">All subcategories</option>
+                            <optgroup :label="c.name" v-for="(c,i) in categories" :key="i">
+                                <option :value="sub.id" v-for="(sub,s) in c.sub_category" :key="s">{{sub.name}}</option>
+                            </optgroup>
                         </select>
                     </div>
                     <div class="grow mr-8">

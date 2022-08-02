@@ -151,6 +151,10 @@ const logout = () => {
                                             Categories
                                         </JetDropdownLink>
 
+                                        <JetDropdownLink :href="route('subcategories.public')">
+                                            Subcategories
+                                        </JetDropdownLink>
+
                                         <div class="border-t border-gray-100" />
 
                                         <!-- Authentication -->

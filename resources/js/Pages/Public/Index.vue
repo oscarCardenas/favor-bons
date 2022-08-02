@@ -43,9 +43,10 @@ defineProps({
                         </div>
 
                         <div class="bg-white sm:p-6 shadow sm:rounded-md">
+                            <!-- <pre>{{ $page }}</pre> -->
                             <div class="grid grid-cols-3 gap-3 pl-8 pr-8 ml-8 mr-8">
                                 <div v-for="(c,i) in categories" :key="i" class="mt-8 p-6 bg-white border border-gray-200 shadow-md dark:bg-gray-800 dark:border-gray-700">
-                                    <div class="h-80">
+                                    <div class="h-64">
                                         <a href="#">
                                             <h5 class="mb-2 text-2xl font-bold tracking-tight text-gray-900 dark:text-white">
                                                 {{ c.name }}
@@ -53,7 +54,8 @@ defineProps({
                                         </a>
                                         <div class="mt-8">
                                             <p  v-for="(sub,s) in c.sub_category" :key="s" class="mb-3 font-normal text-gray-700 dark:text-gray-400">
-                                                <div class="flex" v-if="s < 3">
+                                                <a :href="route('subcategories.public', { subcategory_id: sub.id })" v-if="s < 3" class="w-full text-sm">
+                                                    <div class="flex">
                                                     <span class="mr-3">
                                                         <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
                                                             <path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7" />
@@ -62,7 +64,8 @@ defineProps({
                                                     <span>
                                                         {{ sub.name }}
                                                     </span>
-                                                </div>
+                                                    </div>
+                                                </a>
                                             </p>
                                         </div>
                                     </div>

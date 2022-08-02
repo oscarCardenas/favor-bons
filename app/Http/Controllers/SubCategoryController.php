@@ -8,10 +8,11 @@ use Inertia\Inertia;
 
 use App\Models\Category;
 use App\Models\FavorBond;
+use App\Models\Subcategory;
 
 use Log;
 
-class CategoryController extends Controller
+class SubCategoryController extends Controller
 {
 
     public function index(Request $request)
@@ -46,10 +47,10 @@ class CategoryController extends Controller
 
     public function public(Request $request)
     {
-        return Inertia::render('Category/Index',[
-            'favorbonds' => FavorBond::getFavorBonds($request->input('category_id'),null), 
-            'categories' => Category::where('status',1)->get(),
-            'category_id' => $request->input('category_id')
+        return Inertia::render('Subcategory/Index',[
+            'favorbonds' => FavorBond::getFavorBonds(null,$request->input('subcategory_id')), 
+            'categories' => Category::getCategories(),
+            'subcategory_id' => $request->input('subcategory_id')
         ]);
     }
 
