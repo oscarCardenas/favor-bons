@@ -135,7 +135,7 @@ const logout = () => {
                                             Manage Account
                                         </div>
 
-                                        <JetDropdownLink :href="route('favorbons.show')">
+                                        <JetDropdownLink :href="route('favors.show')">
                                             My Favor Bons
                                         </JetDropdownLink>
 

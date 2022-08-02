@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Controllers\FavorBonds;
+namespace App\Http\Controllers\Favors;
 
 use Inertia\Inertia;
 use Illuminate\Http\Request;
@@ -8,7 +8,7 @@ use App\Models\FavorBond;
 use App\Http\Controllers\Controller;
 use Auth;
 
-class ShowFavorBondsController extends Controller
+class ShowFavorsController extends Controller
 {
     /**
      * Handle the incoming request.
@@ -20,6 +20,6 @@ class ShowFavorBondsController extends Controller
     {
         $user = Auth::user();
         $favorBonds = FavorBond::all(); 
-        return Inertia::render('FavorBonds/ShowFavorBonds',[ 'favorBonds' => $favorBonds]);
+        return Inertia::render('Favors/ShowFavors',[ 'favorBonds' => $favorBonds]);
     }
 }
