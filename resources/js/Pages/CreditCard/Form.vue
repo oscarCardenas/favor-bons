@@ -93,7 +93,7 @@ const storeCreditCardInformation = () => {
                     <JetInputError :message="form.errors.exp_date" class="mt-2" />    
                 </div>
                 <!-- cvc -->
-                <div class="col-span-6 sm:col-span-4" v-if="props.Action == 'create'">
+                <!-- <div class="col-span-6 sm:col-span-4" v-if="props.Action == 'create'">
                     <JetLabel for="cvc" value="CVC" />
                     <JetInput
                         id="cvc"
@@ -103,7 +103,7 @@ const storeCreditCardInformation = () => {
                         class="mt-1 block w-full"
                     />
                     <JetInputError :message="form.errors.cvc" class="mt-2" />       
-                </div>
+                </div> -->
                 <!-- default_payment -->
                 <div class="col-span-6 sm:col-span-4 mb-6">
                     <label class="flex items-center">

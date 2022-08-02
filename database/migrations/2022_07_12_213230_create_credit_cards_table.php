@@ -19,7 +19,7 @@ return new class extends Migration
             $table->string('full_name');
             $table->text('card_number');
             $table->date('exp_date');
-            $table->text('cvc');
+            $table->text('cvc')->nullable();
             $table->integer('default_payment')->nullable();
             $table->timestamps();
 

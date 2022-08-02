@@ -34,7 +34,8 @@ class AuthenticatedSessionController extends Controller
             if (Auth::attempt(['email' => $input['email'], 'password' => $input['password']], $input['remember'])) { 
                 session(['profile' => Profile::select('id','name','description')->where('id',1)->first()]);
                 $request->session()->regenerate();
-                return redirect()->intended('/');            
+                return Redirect::route('public.index');
+                // return redirect()->intended('/');            
             }
         }
  

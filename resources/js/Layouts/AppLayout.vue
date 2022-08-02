@@ -84,8 +84,14 @@ const logout = () => {
 
                             <!-- Navigation Links -->
                             <div class="hidden space-x-8 sm:-my-px sm:ml-10 sm:flex">
-                                <JetNavLink :href="route('dashboard')" :active="route().current('dashboard')">
+                                <!-- <JetNavLink :href="route('dashboard')" :active="route().current('dashboard')">
                                     Dashboard
+                                </JetNavLink> -->
+                                <JetNavLink :href="route('categories.public')" :active="route().current('categories.public')">
+                                    Categories
+                                </JetNavLink>
+                                <JetNavLink :href="route('subcategories.public')" :active="route().current('subcategories.public')">
+                                    Subcategories
                                 </JetNavLink>
                             </div>
                         </div>

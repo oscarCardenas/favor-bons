@@ -201,31 +201,38 @@ const sort = (s) => {
                         </div>
                     </li>
                     <div class="border-t border-gray-100 mt-4" />
-                    <li v-for="(f,i) in filterOption" :key="i">
-                        <div class="grid grid-cols-4 gap-4 pl-8 pr-8 ml-8 mr-8 mt-4" v-if="display_page(i)">
-                            <a href="javascript:void(0);">
-                                <h6 class="font-medium leading-tight text-base mt-0 mb-2">
-                                    {{ f.name }} 
-                                </h6>
-                            </a>
-                            <a href="javascript:void(0);">
-                                <h6 class="font-medium leading-tight text-base mt-0 mb-2">
-                                    {{ f.title }} 
-                                </h6>
-                            </a>
-                            <a href="javascript:void(0);">
-                                <h6 class="font-medium leading-tight text-base mt-0 mb-2">
-                                    {{ f.price }} Favor
-                                </h6>
-                            </a>
-                            <a href="javascript:void(0);">
-                                <h6 class="font-medium leading-tight text-base mt-0 mb-2">
-                                    {{ f.updated_at }} 
-                                </h6>
-                            </a>
+                    <div v-if="filterOption.length == 0">
+                        <div class="grid grid-cols-1 gap-1 pl-8 pr-8 ml-8 mr-8 mt-4 place-items-center">
+                            Sorry, no records found
                         </div>
-                        <div class="border-t border-gray-100 mt-4" v-if="display_page(i)" />
-                    </li>
+                    </div>
+                    <div v-else>
+                        <li v-for="(f,i) in filterOption" :key="i">
+                            <div class="grid grid-cols-4 gap-4 pl-8 pr-8 ml-8 mr-8 mt-4" v-if="display_page(i)">
+                                <a href="javascript:void(0);">
+                                    <h6 class="font-medium leading-tight text-base mt-0 mb-2">
+                                        {{ f.name }} 
+                                    </h6>
+                                </a>
+                                <a href="javascript:void(0);">
+                                    <h6 class="font-medium leading-tight text-base mt-0 mb-2">
+                                        {{ f.title }} 
+                                    </h6>
+                                </a>
+                                <a href="javascript:void(0);">
+                                    <h6 class="font-medium leading-tight text-base mt-0 mb-2">
+                                        {{ f.price }} Favor
+                                    </h6>
+                                </a>
+                                <a href="javascript:void(0);">
+                                    <h6 class="font-medium leading-tight text-base mt-0 mb-2">
+                                        {{ f.updated_at }} 
+                                    </h6>
+                                </a>
+                            </div>
+                            <div class="border-t border-gray-100 mt-4" v-if="display_page(i)" />
+                        </li>
+                    </div>
                 </ul>
             </div>
         </div>

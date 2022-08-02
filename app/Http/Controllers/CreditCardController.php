@@ -25,8 +25,8 @@ class CreditCardController extends Controller
         $request->validate([
             'full_name' => 'required',
             'card_number' => 'required',
-            'exp_date' => 'required',
-            'cvc' => 'required'
+            'exp_date' => 'required'
+            // 'cvc' => 'required'
         ]);
 
         $cardFromUser = CreditCard::where('user_id',Auth::id())->count();
@@ -42,7 +42,7 @@ class CreditCardController extends Controller
         $c->full_name = $request->input('full_name');
         $c->card_number = CreditCard::encrypt($request->input('card_number'));
         $c->exp_date = CreditCard::formatExpireDate($request->input('exp_date'));
-        $c->cvc = CreditCard::encrypt($request->input('cvc'));
+        // $c->cvc = CreditCard::encrypt($request->input('cvc'));
         $c->default_payment = ($cardFromUser == 0) ? true : $request->input('default_payment');
         $c->save();
 
