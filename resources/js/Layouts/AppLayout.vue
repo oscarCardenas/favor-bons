@@ -7,15 +7,16 @@ const el = ref()
 
 onMounted(() => {
     setTimeout(() => verifyloggedIn(), 5000);
-    themeCheck();
+    if(usePage().props.value.user){
+        themeCheck();
+    }
+    
 })
 
-const userTheme = usePage().props.value.user.theme
 const systemTheme = window.matchMedia("(prefers-color-sceme: dark)").matches;
 // initial theme check
 const themeCheck = () => {
-    console.log('usertheme', userTheme);
-    if ( userTheme === 1 || (!userTheme && systemTheme)) {
+    if ( usePage().props.value.user.theme === 1 || (!userTheme && systemTheme)) {
         document.documentElement.classList.add('dark');
         return;
     }
