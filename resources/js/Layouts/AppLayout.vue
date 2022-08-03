@@ -14,9 +14,10 @@ onMounted(() => {
 })
 
 const systemTheme = window.matchMedia("(prefers-color-sceme: dark)").matches;
-// initial theme check
+
 const themeCheck = () => {
-    if ( usePage().props.value.user.theme === 1 || (!userTheme && systemTheme)) {
+    const userTheme = usePage().props.value.user.theme
+    if ( userTheme === 1 || (!userTheme && systemTheme)) {
         document.documentElement.classList.add('dark');
         return;
     }
