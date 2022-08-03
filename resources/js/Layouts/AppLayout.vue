@@ -8,9 +8,7 @@ const el = ref()
 onMounted(() => {
     setTimeout(() => verifyloggedIn(), 5000);
     if(usePage().props.value.user){
-        console.log('hello')
         themeCheck();
-        console.log("Dark mode: " + usePage().props.value.user.theme);
     }
     
 })
