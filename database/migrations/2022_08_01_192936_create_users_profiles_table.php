@@ -19,13 +19,13 @@ return new class extends Migration
             $table->bigInteger('profile_id')->default(1);
             $table->timestamps();
 
-            $table->foreign('user_id')->references('id')->on('users')
-                ->onDelete('cascade')
-                ->onUpdate('cascade');
+            // $table->foreign('user_id')->references('id')->on('users')
+            //     ->onDelete('cascade')
+            //     ->onUpdate('cascade');
 
-            $table->foreign('profile_id')->references('id')->on('profiles')
-                ->onDelete('cascade')
-                ->onUpdate('cascade');
+            // $table->foreign('profile_id')->references('id')->on('profiles')
+            //     ->onDelete('cascade')
+            //     ->onUpdate('cascade');
                 
         });
     }
