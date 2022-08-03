@@ -55,12 +55,12 @@ class RegisteredUserController extends Controller
                 $int->category_id = $v;
                 $int->save();
             }
+            DB::commit();
 
             Auth::login($user);
             return Redirect::route('public.index');
-
-            DB::commit();
         } catch (\Throwable $th) {
+            \Log::info($th);
             DB::rollBack();
             return redirect()->back()->withErrors(['name' => 'Internal Server Error.']);
         }
