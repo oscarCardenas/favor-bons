@@ -12,10 +12,11 @@ use App\Http\Controllers\SubCategoryController;
 use App\Http\Controllers\BillingAddresController;
 use App\Http\Controllers\ActiveCampaignController;
 use App\Http\Controllers\CustomerSupportController;
-use App\Http\Controllers\Auth\RegisteredUserController;
 use App\Http\Controllers\Favors\ShowFavorsController;
+use App\Http\Controllers\Auth\RegisteredUserController;
 use App\Http\Controllers\Favors\CreateNewFavorController;
 use App\Http\Controllers\Auth\AuthenticatedSessionController;
+use App\Http\Controllers\Auth\AuthenticatedAdminSessionController;
 
 /*
 |--------------------------------------------------------------------------
@@ -73,5 +74,15 @@ Route::middleware(['auth:sanctum',config('jetstream.auth_session'),'verified',])
 
     Route::get('/favors', ShowFavorsController::class )->name('favors.show');
     Route::get('/favors/create', [ CreateNewFavorController::class, 'create' ] )->name('favors.create');
+
+});
+
+/** Routes for asmin */
+Route::prefix('admin')->group(function () {
+
+    Route::get('/login', [AuthenticatedAdminSessionController::class, 'create'])->name('admin.login');
+    Route::post('/login', [AuthenticatedAdminSessionController::class, 'store'])->name('admin.login.store');
+
+
 
 });

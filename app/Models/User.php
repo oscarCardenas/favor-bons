@@ -55,9 +55,9 @@ class User extends Authenticatable
      *
      * @var array
      */
-    protected $appends = [
-        'profile_photo_url',
-    ];
+    // protected $appends = [
+    //     'profile_photo_url',
+    // ];
 
     public function billingAddres()
     {
@@ -79,13 +79,13 @@ class User extends Authenticatable
         return $this->hasMany(InterestCategory::class, 'user_id', 'id');
     }
 
-    public static function searchUser($email){
-        $r = self::join('users_profiles', 'users.id', '=', 'users_profiles.user_id')
+    public static function searchUser($email,$profileId){
+        return self::select('profiles.id','profiles.name','profiles.description')
+            ->join('users_profiles', 'users.id', '=', 'users_profiles.user_id')
+            ->join('profiles', 'users_profiles.profile_id', '=', 'profiles.id')
             ->where('users.email',$email)
-            ->where('users_profiles.profile_id',1)
-            ->count();
-
-        return ($r > 0) ? true : false;
+            ->where('users_profiles.profile_id',$profileId)
+            ->first();
     }
 
 }

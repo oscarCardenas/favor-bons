@@ -14,11 +14,11 @@ use Laravel\Fortify\Rules\Password;
 use App\Models\User;
 use App\Models\Profile;
 
-class AuthenticatedSessionController extends Controller
+class AuthenticatedAdminSessionController extends Controller
 {
     public function create(Request $request)
     {
-        return (Auth::check()) ? Redirect::route('public.index') : Inertia::render('Auth/Login');
+        return (Auth::check()) ? Redirect::route('public.index') : Inertia::render('Auth/LoginAdmin');
     }
 
     public function store(Request $request)
@@ -29,13 +29,12 @@ class AuthenticatedSessionController extends Controller
             'password' => ['required'],
         ])->validate();
         
-        $user = User::searchUser($input['email'],Profile::BUYER);
+        $user = User::searchUser($input['email'],Profile::ADMIN);
         if($user){
-            if (Auth::attempt(['email' => $input['email'], 'password' => $input['password']], $input['remember'])) { 
+            if (Auth::attempt(['email' => $input['email'], 'password' => $input['password']], $input['remember'])) {
                 session(['profile' => $user]);
                 $request->session()->regenerate();
                 return Redirect::route('public.index');
-                // return redirect()->intended('/');            
             }
         }
  
