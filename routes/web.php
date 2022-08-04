@@ -4,6 +4,8 @@ use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
 
+use App\Http\Middleware\AdminAuth;
+
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\PublicController;
 use App\Http\Controllers\CategoryController;
@@ -77,12 +79,25 @@ Route::middleware(['auth:sanctum',config('jetstream.auth_session'),'verified',])
 
 });
 
-/** Routes for asmin */
+/** Routes for admin */
 Route::prefix('admin')->group(function () {
 
     Route::get('/login', [AuthenticatedAdminSessionController::class, 'create'])->name('admin.login');
     Route::post('/login', [AuthenticatedAdminSessionController::class, 'store'])->name('admin.login.store');
 
+    Route::middleware([AdminAuth::class])->group(function(){
+            
+        Route::get('/categories/index', [CategoryController::class, 'index'])->name('categories.index');
+        Route::post('/categories/store', [CategoryController::class, 'store'])->name('categories.store');
+        Route::put('/categories/update', [CategoryController::class, 'update'])->name('categories.update');
+        Route::delete('/categories/destroy', [CategoryController::class, 'destroy'])->name('categories.destroy');
 
+        // Route::get('/categories/{category_id}/subcategories', [SubCategoryController::class, 'index'])->name('subcategories.index');
+        Route::get('/subcategories', [SubCategoryController::class, 'index'])->name('subcategories.index');
+        Route::post('/subcategories/store', [SubCategoryController::class, 'store'])->name('subcategories.store');
+        Route::put('/subcategories/update', [SubCategoryController::class, 'update'])->name('subcategories.update');
+        Route::delete('/subcategories/destroy', [SubCategoryController::class, 'destroy'])->name('subcategories.destroy');
+
+    });
 
 });

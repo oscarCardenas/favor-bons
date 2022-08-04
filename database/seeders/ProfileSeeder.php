@@ -29,7 +29,9 @@ class ProfileSeeder extends Seeder
             ['user_id' => 2, 'profile_id' => 1, 'created_at' => $now, 'updated_at' => $now],
             ['user_id' => 2, 'profile_id' => 2, 'created_at' => $now, 'updated_at' => $now],
             ['user_id' => 3, 'profile_id' => 1, 'created_at' => $now, 'updated_at' => $now],
-            ['user_id' => 3, 'profile_id' => 2, 'created_at' => $now, 'updated_at' => $now]
+            ['user_id' => 3, 'profile_id' => 2, 'created_at' => $now, 'updated_at' => $now],
+            ['user_id' => 4, 'profile_id' => 1, 'created_at' => $now, 'updated_at' => $now],
+            ['user_id' => 4, 'profile_id' => 2, 'created_at' => $now, 'updated_at' => $now]
         ];
 
         Profile::insert($array);

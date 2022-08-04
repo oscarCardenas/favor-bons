@@ -60,7 +60,7 @@ class RegisteredUserController extends Controller
             Auth::login($user);
             return Redirect::route('public.index');
         } catch (\Throwable $th) {
-            \Log::info($th);
+            // \Log::info($th);
             DB::rollBack();
             return redirect()->back()->withErrors(['name' => 'Internal Server Error.']);
         }

@@ -27,7 +27,12 @@ class CategorySeeder extends Seeder
             ['name' => 'Software', 'description' => null, 'type' => null, 'created_at' => $now],
             ['name' => 'Services', 'description' => null, 'type' => null, 'created_at' => $now],
             ['name' => 'Real Estate', 'description' => null, 'type' => null, 'created_at' => $now],
-            ['name' => 'Unique Favors', 'description' => null, 'type' => null, 'created_at' => $now]
+            ['name' => 'Unique Favors', 'description' => null, 'type' => null, 'created_at' => $now],
+            ['name' => 'Category for delete 1', 'description' => null, 'type' => null, 'created_at' => $now],
+            ['name' => 'Category for delete 2', 'description' => null, 'type' => null, 'created_at' => $now],
+            ['name' => 'Category for delete 3', 'description' => null, 'type' => null, 'created_at' => $now],
+            ['name' => 'Category for delete 4', 'description' => null, 'type' => null, 'created_at' => $now],
+            ['name' => 'Category for delete 5', 'description' => null, 'type' => null, 'created_at' => $now]
         ];
 
         Category::insert($array);

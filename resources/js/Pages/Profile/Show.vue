@@ -51,11 +51,11 @@ defineProps({
                     <JetSectionBorder />
                 </div>
 
-                <div v-if="$page.props.jetstream.canUpdateProfileInformation">
+                <!-- <div v-if="$page.props.jetstream.canUpdateProfileInformation">
                     <UpdateCreditCardInformation class="mt-10 sm:mt-0" />
 
                     <JetSectionBorder />
-                </div>
+                </div> -->
 
                 <div v-if="$page.props.jetstream.canManageTwoFactorAuthentication">
                     <TwoFactorAuthenticationForm 

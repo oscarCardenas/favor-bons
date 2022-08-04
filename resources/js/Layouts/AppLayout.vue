@@ -152,29 +152,28 @@ const logout = () => {
                                         <div class="block px-4 py-2 text-xs text-gray-400">
                                             Manage Account
                                         </div>
-
-                                        <JetDropdownLink :href="route('favors.show')">
-                                            My Favor Bons
-                                        </JetDropdownLink>
-
-                                        <JetDropdownLink :href="route('support.show')">
-                                            Customer Support
-                                        </JetDropdownLink>
-
-                                        <JetDropdownLink :href="route('profile.show')">
-                                            Profile
-                                        </JetDropdownLink>
-
-                                        <JetDropdownLink :href="route('categories.public')">
-                                            Categories
-                                        </JetDropdownLink>
-
-                                        <JetDropdownLink :href="route('subcategories.public')">
-                                            Subcategories
-                                        </JetDropdownLink>
-
+                                        <!-- options user -->
+                                        <div v-if="$page.props.profile.id == 1">
+                                            <JetDropdownLink :href="route('profile.show')">
+                                                Profile
+                                            </JetDropdownLink>
+                                            <JetDropdownLink :href="route('support.show')">
+                                                Customer Support
+                                            </JetDropdownLink>
+                                            <JetDropdownLink :href="route('favors.show')">
+                                                My Favor Bons
+                                            </JetDropdownLink>
+                                        </div>
+                                        <!-- options admin -->
+                                        <div v-if="$page.props.profile.id == 2">
+                                            <JetDropdownLink :href="route('profile.show')">
+                                                Profile
+                                            </JetDropdownLink>
+                                            <JetDropdownLink :href="route('categories.index')">
+                                                Categories
+                                            </JetDropdownLink>
+                                        </div>
                                         <div class="border-t border-gray-100" />
-
                                         <!-- Authentication -->
                                         <form @submit.prevent="logout">
                                             <JetDropdownLink as="button">
