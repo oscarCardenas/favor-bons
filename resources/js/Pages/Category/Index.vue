@@ -19,7 +19,7 @@ const paginate = reactive ({
     currentSort: 'name',
     currentSortDir: 'asc',
     gridData: [],
-    dataPerPage: 25,
+    dataPerPage: 10,
     currentPage: 1,
     filterDatalength: 0,
     search: ''

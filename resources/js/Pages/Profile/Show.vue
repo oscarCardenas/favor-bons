@@ -45,13 +45,13 @@ defineProps({
                     <JetSectionBorder />
                 </div>
 
-                <div v-if="$page.props.jetstream.canUpdateProfileInformation">
+                <div v-if="$page.props.jetstream.canUpdateProfileInformation && $page.props.profile.id == 1">
                     <UpdateBillingInformation class="mt-10 sm:mt-0" />
 
                     <JetSectionBorder />
                 </div>
 
-                <!-- <div v-if="$page.props.jetstream.canUpdateProfileInformation">
+                <!-- <div v-if="$page.props.jetstream.canUpdateProfileInformation && $page.props.profile.id == 1">
                     <UpdateCreditCardInformation class="mt-10 sm:mt-0" />
 
                     <JetSectionBorder />
