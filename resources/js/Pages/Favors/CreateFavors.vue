@@ -1,6 +1,53 @@
 <script setup>
     import AppLayout from '@/Layouts/AppLayout.vue';
-    import FavorsListItem from '@/Components/FavorsListItem.vue';
+    import DescribeFavor from '@/Pages/Favors/Partials/DescribeFavor.vue';
+    import ValueFavor from '@/Pages/Favors/Partials/ValueFavor.vue';
+    import StepperHeader from '@/Components/StepperHeader.vue';
+    import { watch, onUpdated, reactive, ref } from 'vue';
+    import { useForm, onWatch } from '@inertiajs/inertia-vue3';
+
+    const props = defineProps({
+        categories: { type : Object },
+        categorySelected : { type : Object, default : { sub_category : [] } },
+        executionTypes : { type : Object },
+        executionTypeSelected: { type: Object },
+    });
+
+    const state = reactive({ step: 1 })
+    const stepHeaders = [ "Step 1", "Step 2", "Step 3"];    
+ 
+    const form = useForm({
+        title: '',
+        subCategory: 0,
+        description: '',
+
+        qualified_description: '',
+        price: 0,
+        price_description: '',
+        conduced : '',
+        stock: 0,
+        is_unlimited : false,
+
+        image: { type: Object },
+
+        full_name: '',
+        email: '',
+        location: '',
+        
+        //escution_id        
+        
+    });
+
+
+    const next = () => {
+        console.log(state.step)
+        state.step++
+        console.log(state.step)
+    }
+    
+    const previous = () => {
+      state.step--
+    }
 
 </script>
 
@@ -15,8 +62,59 @@
         <div class="py-12">
             <div class="max-w-7xl mx-auto py-10 sm:px-6 lg:px-8">
                 <div class="bg-white sm:p-6 shadow sm:rounded-md">
-                    <div className="divide-y divide-slate-100" >
-                        
+                    <div className="divide-y divide-slate-100" >                                                 
+                         
+                        <div class="text-gray-600">
+                            <div class="container flex flex-col flex-wrap px-5 py-4 mx-auto">
+                                
+                                <StepperHeader :steps="stepHeaders" :currentStep="state.step" />
+
+                                <div class="flex flex-col w-full text-center">
+                                    <div class="py-6 bg-white sm:py-8 lg:py-12" v-show="state.step == 1" >
+                                        <div class="px-4 mx-auto max-w-screen-2xl md:px-8">
+                                        <!-- form - start -->
+                                            <div class="max-w-screen-md mx-auto">
+                                                <DescribeFavor 
+                                                    :form="form"  
+                                                    :next="next"
+                                                    :categories="categories"
+                                                    :categorySelected="categorySelected"                                                    
+                                                    />
+                                                
+                                            </div>
+                                        <!-- form - end -->
+                                        </div>
+                                    </div>
+
+                                    <div class="py-6 bg-white sm:py-8 lg:py-12" v-show="state.step == 2" >
+                                        <div class="px-4 mx-auto max-w-screen-2xl md:px-8">
+                                        <!-- form - start -->
+                                            <div class="max-w-screen-md mx-auto">
+                                                <ValueFavor 
+                                                    :form="form"
+                                                    :executionTypes="executionTypes"  
+                                                    :executionTypeSelected="executionTypeSelected"
+                                                    :next="next"
+                                                    :previous="previous"                                                   
+                                                    />
+                                            </div>                                            
+                                        <!-- form - end -->
+                                        </div>
+                                    </div>
+
+                                    <div class="py-6 bg-white sm:py-8 lg:py-12" v-show="state.step == 3" >
+                                        <div class="px-4 mx-auto max-w-screen-2xl md:px-8">
+                                        <!-- form - start -->
+                                            <h1>Step 3</h1>
+                                        <!-- form - end -->
+                                        </div>
+                                    </div>
+
+                                </div>
+ 
+                            </div>
+                        </div>
+
                     </div>
                 </div>
             </div>

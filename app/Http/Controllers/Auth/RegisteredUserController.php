@@ -24,7 +24,7 @@ class RegisteredUserController extends Controller
 
     public function store(Request $request)
     {
-        $input = $request->all();
+        $input = Requestall();
         Validator::make($input, [
             'name' => ['required', 'string', 'max:255'],
             'email' => ['required', 'string', 'email', 'max:255', 'unique:users'],

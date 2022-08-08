@@ -1,7 +1,7 @@
 <script setup>
 
     const props = defineProps({
-        favorBond: Object
+        favor: Object
     });
 
 </script>
@@ -14,13 +14,13 @@
         <form class="flex-auto p-6">
             <div class="flex flex-wrap">
             <h1 class="flex-auto text-lg font-semibold text-slate-900">
-                {{ favorBond.title }}
+                {{ favor.title }}
             </h1>
             <div class="text-lg font-semibold text-slate-500">
-                Cost: {{favorBond.price}} FavorBonds
+                Cost: {{favor.price}} FavorBonds
             </div>
             <div class="w-full flex-none text-sm font-medium text-slate-700 mt-2">
-                {{ favorBond.description }}
+                {{ favor.description }}
             </div>
             </div>
             <div class="flex items-baseline mt-4 mb-6 pb-6 border-b border-slate-200"></div>

@@ -6,6 +6,8 @@ use App\Http\Controllers\Controller;
 use Inertia\Inertia;
 use Illuminate\Http\Request;
 use App\Models\FavorBond;
+use App\Models\Category;
+use App\Models\ExecutionOfFavor;
 
 use Auth;
 
@@ -18,7 +20,12 @@ class CreateNewFavorController extends Controller
      */
     public function create()
     {
-        return Inertia::render('Favors/CreateFavors');
+        $categories = Category::getCategories();
+        $executionTypes = ExecutionOfFavor::all();
+        return Inertia::render('Favors/CreateFavors', [ 
+            'categories' => $categories,
+            'executionTypes' => $executionTypes
+            ] );
     }
 
     /**
@@ -29,23 +36,27 @@ class CreateNewFavorController extends Controller
      *
      * @throws \Illuminate\Validation\ValidationException
      */
-    public function store(Request $request)
+    public function store()
     {
-        // $request->validate([
-        //     'name' => 'required|string|max:255',
-        //     'email' => 'required|string|email|max:255|unique:users',
-        //     'password' => ['required', 'confirmed', Rules\Password::defaults()],
-        // ]);
 
-        // $user = User::create([
-        //     'name' => $request->name,
-        //     'email' => $request->email,
-        //     'password' => Hash::make($request->password),
-        // ]);
+        $input = Request::all();
 
-        // event(new Registered($user));
+        $favorBond = FavorBond::create([
+            'subcategory_id' => 1,
+            'user_id' => Auth::id(),
+            'title' => $input['title'],
+            'description' => $input['description'],
+            'qualified_description' => $input['qualified_description'],
+            'price' => $input['price'],
+            'price_description' => $input['price_description'],
+            'execution_of_favor_id' => 1,
+            'unlimited' => true,
+            'stock' => $input['stock']                       
+        ]);        
+        
+        $response = cloudinary()->upload($request->file('image')->getRealPath())->getSecurePath();
 
-        // Auth::login($user);
+        $favorBond->image = $response;
 
         return redirect(RouteServiceProvider::HOME);
     }
