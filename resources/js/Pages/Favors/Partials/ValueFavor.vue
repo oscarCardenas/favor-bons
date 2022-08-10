@@ -3,7 +3,7 @@
         executionTypes: { type : Object },    
         executionTypeSelected: { type: Object },
         form : Object,
-        next: Function,
+        submitFavor: Function,
         previous: Function
     })
 </script>
@@ -39,7 +39,7 @@
         <JetInput
             id="price_description"
             v-model="form.price_description"
-            type="number"
+            type="text"
             class="mt-1 block w-full"
             autofocus
             autocomplete="price_description"
@@ -48,9 +48,9 @@
 
     <div class="flex flex-col mb-4">
         <JetLabel class="inline-flex" for="conduced" value="How will the favor be conducted (phone, virtual call, FaceTime, in-person)?" />
-        <select name="executionTypes" id="executionTypes" v-model="categorySelected"
+        <select name="executionTypes" id="executionTypes" v-model="form.executionType"
             class="border-gray-300 focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 rounded-md shadow-sm">
-            <option :value="executionType" v-for="executionType in executionTypes" :key="executionType.id">{{executionType.name}}</option>
+            <option :value="executionType.id" v-for="executionType in executionTypes" :key="executionType.id">{{executionType.name}}</option>
         </select>
     </div>
 
@@ -145,7 +145,7 @@
             /></svg>Back
         </button>
         <button
-            @click="next"
+            @click="submitFavor"
             class="
             px-6
             py-2
@@ -157,7 +157,7 @@
             ring-indigo-300
             "
         >
-            Next
+            Crear Favor
         </button>
     </div>
 

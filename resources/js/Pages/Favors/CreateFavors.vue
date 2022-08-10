@@ -5,6 +5,8 @@
     import StepperHeader from '@/Components/StepperHeader.vue';
     import { watch, onUpdated, reactive, ref } from 'vue';
     import { useForm, onWatch } from '@inertiajs/inertia-vue3';
+    import { Inertia } from '@inertiajs/inertia'
+
 
     const props = defineProps({
         categories: { type : Object },
@@ -18,35 +20,41 @@
  
     const form = useForm({
         title: '',
-        subCategory: 0,
         description: '',
-
+        subCategory: '',
         qualified_description: '',
-        price: 0,
+        price: '',
         price_description: '',
-        conduced : '',
-        stock: 0,
+        stock: '',
         is_unlimited : false,
-
         image: { type: Object },
-
         full_name: '',
         email: '',
         location: '',
-        
-        //escution_id        
-        
+        executionType: '',
     });
 
 
-    const next = () => {
-        console.log(state.step)
+    const next = () => {        
         state.step++
-        console.log(state.step)
     }
     
     const previous = () => {
       state.step--
+    }
+
+    function submit() {
+        
+        form
+            .transform((data) => ({
+                ...data,
+                price: parseInt(data.price),
+                stock: parseInt(data.stock),
+            }))
+            .post(route('favors.store'), {
+                preserveScroll: true,
+                onSuccess: () => state.step++
+            })
     }
 
 </script>
@@ -93,9 +101,9 @@
                                                 <ValueFavor 
                                                     :form="form"
                                                     :executionTypes="executionTypes"  
-                                                    :executionTypeSelected="executionTypeSelected"
-                                                    :next="next"
-                                                    :previous="previous"                                                   
+                                                    :executionTypeSelected="executionTypeSelected"                                                    
+                                                    :previous="previous"
+                                                    :submitFavor="submit"
                                                     />
                                             </div>                                            
                                         <!-- form - end -->

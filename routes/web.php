@@ -71,5 +71,6 @@ Route::middleware(['auth:sanctum',config('jetstream.auth_session'),'verified',])
 
     Route::get('/favors', ShowFavorsController::class )->name('favors.show');
     Route::get('/favors/create', [ CreateNewFavorController::class, 'create' ] )->name('favors.create');
+    Route::post('/favors/store', [ CreateNewFavorController::class, 'store' ] )->name('favors.store');
 
 });
