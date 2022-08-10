@@ -4,7 +4,7 @@
     import ValueFavor from '@/Pages/Favors/Partials/ValueFavor.vue';
     import StepperHeader from '@/Components/StepperHeader.vue';
     import { watch, onUpdated, reactive, ref } from 'vue';
-    import { useForm, onWatch } from '@inertiajs/inertia-vue3';
+    import { useForm } from '@inertiajs/inertia-vue3';
     import { Inertia } from '@inertiajs/inertia'
 
 
@@ -15,8 +15,9 @@
         executionTypeSelected: { type: Object },
     });
 
-    const state = reactive({ step: 1 })
-    const stepHeaders = [ "Step 1", "Step 2", "Step 3"];    
+    const state = reactive({ step: 3, favorUrl: `${window.location.protocol}//${window.location.host}/favor/${route().params.id}` })
+    const stepHeaders = [ "Step 1", "Step 2", "Step 3"];
+    let self = this;
  
     const form = useForm({
         title: '',
@@ -41,7 +42,7 @@
     
     const previous = () => {
       state.step--
-    }
+    }    
 
     function submit() {
         
@@ -53,7 +54,10 @@
             }))
             .post(route('favors.store'), {
                 preserveScroll: true,
-                onSuccess: () => state.step++
+                onSuccess: () => {       
+                    state.favorUrl = `${window.location.protocol}//${window.location.host}/favor/${route().params.id}`
+                    state.step++
+                }
             })
     }
 
@@ -113,8 +117,13 @@
                                     <div class="py-6 bg-white sm:py-8 lg:py-12" v-show="state.step == 3" >
                                         <div class="px-4 mx-auto max-w-screen-2xl md:px-8">
                                         <!-- form - start -->
-                                            <h1>Step 3</h1>
-                                        <!-- form - end -->
+                                            <span class="text-xl">Spread the Word</span>
+
+                                            <h2>Great news, your favor is live!</h2>
+                                            <p>Copy and paste the link below and share this to generate interest in your favor!</p>
+                                            <div>{{state.favorUrl}}</div>
+                                            
+                                            
                                         </div>
                                     </div>
 

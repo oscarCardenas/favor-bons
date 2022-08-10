@@ -66,6 +66,6 @@ class CreateNewFavorController extends Controller
 
         $favorBond->save();                
 
-        return Redirect::route('favors.create');
+        return Redirect::route('favors.create', ['id' => 1] );
     }
 }
