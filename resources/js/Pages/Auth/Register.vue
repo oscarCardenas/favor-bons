@@ -32,10 +32,8 @@ const submit = () => {
 <template>
     <Head title="Register" />
 
-    <JetAuthenticationCard>
-        <template #logo>
-            <JetAuthenticationCardLogo />
-        </template>
+    <JetAuthenticationCard class="wrapper">
+
 
         <!-- <JetValidationErrors class="mb-4" /> -->
 
@@ -45,12 +43,13 @@ const submit = () => {
 
         <form @submit.prevent="submit">
             <div>
+                 <JetAuthenticationCardLogo />
                 <JetLabel for="name" value="Name" />
                 <JetInput
                     id="name"
                     v-model="form.name"
                     type="text"
-                    class="mt-1 block w-full"
+                    class="mt-1 block w-full focus:ring-borderInput"
                     autofocus
                     autocomplete="name"
                 />
@@ -63,7 +62,7 @@ const submit = () => {
                     id="email"
                     v-model="form.email"
                     type="email"
-                    class="mt-1 block w-full"
+                    class="mt-1 block w-full focus:ring-borderInput"
                 />
                 <JetInputError :message="form.errors.email" class="mt-2" />
             </div>
@@ -74,7 +73,7 @@ const submit = () => {
                     id="password"
                     v-model="form.password"
                     type="password"
-                    class="mt-1 block w-full"
+                    class="mt-1 block w-full focus:ring-borderInput"
                     autocomplete="new-password"
                 />
                 <JetInputError :message="form.errors.password" class="mt-2" />
@@ -86,7 +85,7 @@ const submit = () => {
                     id="password_confirmation"
                     v-model="form.password_confirmation"
                     type="password"
-                    class="mt-1 block w-full"
+                    class="mt-1 block w-full focus:ring-borderInput"
                     autocomplete="new-password"
                 />
                 <JetInputError :message="form.errors.password_confirmation" class="mt-2" />
@@ -122,7 +121,7 @@ const submit = () => {
                     Already registered?
                 </Link>
 
-                <JetButton class="ml-4" :class="{ 'opacity-25': form.processing }" :disabled="form.processing">
+                <JetButton class="ml-4 primaryButton" :class="{ 'opacity-25': form.processing }" :disabled="form.processing">
                     Register
                 </JetButton>
             </div>
