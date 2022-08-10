@@ -8,9 +8,21 @@ const el = ref()
 onMounted(() => {
     setTimeout(() => verifyloggedIn(), 5000);
     if(usePage().props.value.user){
-        console.log("Dark mode: " + usePage().props.value.user.theme);
+        themeCheck();
     }
+    
 })
+
+const systemTheme = window.matchMedia("(prefers-color-sceme: dark)").matches;
+
+const themeCheck = () => {
+    const userTheme = usePage().props.value.user.theme
+    if ( userTheme === 1 || (!userTheme && systemTheme)) {
+        document.documentElement.classList.add('dark');
+        return;
+    }
+    document.documentElement.classList.remove('dark');
+};
 
 defineProps({
     title: String,
@@ -84,8 +96,14 @@ const logout = () => {
 
                             <!-- Navigation Links -->
                             <div class="hidden space-x-8 sm:-my-px sm:ml-10 sm:flex">
-                                <JetNavLink :href="route('dashboard')" :active="route().current('dashboard')">
+                                <!-- <JetNavLink :href="route('dashboard')" :active="route().current('dashboard')">
                                     Dashboard
+                                </JetNavLink> -->
+                                <JetNavLink :href="route('categories.public')" :active="route().current('categories.public')">
+                                    Categories
+                                </JetNavLink>
+                                <JetNavLink :href="route('subcategories.public')" :active="route().current('subcategories.public')">
+                                    Subcategories
                                 </JetNavLink>
                             </div>
                         </div>
@@ -134,25 +152,28 @@ const logout = () => {
                                         <div class="block px-4 py-2 text-xs text-gray-400">
                                             Manage Account
                                         </div>
-
-                                        <JetDropdownLink :href="route('favors.show')">
-                                            My Favor Bons
-                                        </JetDropdownLink>
-
-                                        <JetDropdownLink :href="route('support.show')">
-                                            Customer Support
-                                        </JetDropdownLink>
-
-                                        <JetDropdownLink :href="route('profile.show')">
-                                            Profile
-                                        </JetDropdownLink>
-
-                                        <JetDropdownLink :href="route('categories.public')">
-                                            Categories
-                                        </JetDropdownLink>
-
+                                        <!-- options user -->
+                                        <div v-if="$page.props.profile.id == 1">
+                                            <JetDropdownLink :href="route('profile.show')">
+                                                Profile
+                                            </JetDropdownLink>
+                                            <JetDropdownLink :href="route('support.show')">
+                                                Customer Support
+                                            </JetDropdownLink>
+                                            <JetDropdownLink :href="route('favors.show')">
+                                                My Favor Bons
+                                            </JetDropdownLink>
+                                        </div>
+                                        <!-- options admin -->
+                                        <div v-if="$page.props.profile.id == 2">
+                                            <JetDropdownLink :href="route('profile.show')">
+                                                Profile
+                                            </JetDropdownLink>
+                                            <JetDropdownLink :href="route('categories.index')">
+                                                Categories
+                                            </JetDropdownLink>
+                                        </div>
                                         <div class="border-t border-gray-100" />
-
                                         <!-- Authentication -->
                                         <form @submit.prevent="logout">
                                             <JetDropdownLink as="button">

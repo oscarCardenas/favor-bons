@@ -15,8 +15,8 @@ return new class extends Migration
     {
         Schema::create('users_profiles', function (Blueprint $table) {
             $table->id();
-            $table->bigInteger('user_id')->nullable();
-            $table->bigInteger('profile_id')->nullable();
+            $table->bigInteger('user_id');
+            $table->bigInteger('profile_id')->default(1);
             $table->timestamps();
 
             // $table->foreign('user_id')->references('id')->on('users')

@@ -19,9 +19,10 @@ class UserSeeder extends Seeder
     {
         $now = Carbon::now();
         $array = [
-            ['name' => 'Antonio Mora', 'email' => 'antonio@cloudcoderlabs.com', 'password' => Hash::make('12345678'), 'created_at' => $now],
-            ['name' => 'Antonio Mora', 'email' => 'oscar@cloudcoderlabs.com', 'password' => Hash::make('12345678'), 'created_at' => $now],
-            ['name' => 'Antonio Mora', 'email' => 'angel@cloudcoderlabs.com', 'password' => Hash::make('12345678'), 'created_at' => $now]
+            ['name' => 'Antonio Mora', 'email' => 'antonio@cloudcoderlabs.com', 'password' => Hash::make('12345678'), 'created_at' => $now, 'updated_at' => $now],
+            ['name' => 'Antonio Mora', 'email' => 'oscar@cloudcoderlabs.com',   'password' => Hash::make('12345678'),   'created_at' => $now, 'updated_at' => $now],
+            ['name' => 'Antonio Mora', 'email' => 'angel@cloudcoderlabs.com',   'password' => Hash::make('12345678'),   'created_at' => $now, 'updated_at' => $now],
+            ['name' => 'Ryan Jones', 'email' => 'ryan.jones@wonderdads.com',    'password' => Hash::make('12345678'),   'created_at' => $now, 'updated_at' => $now]
         ];
 
         User::insert($array);

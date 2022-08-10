@@ -14,7 +14,7 @@ class FavorBond extends Model
     protected $table = 'favorbonds';
     protected $primaryKey = 'id';
     
-    public static function getFavorBonds($categoryId,$r=[]){
+    public static function getFavorBonds($categoryId,$subCategoryId,$r=[]){
         $res = self::select('categories.name','favorbonds.title','favorbonds.description','favorbonds.price','favorbonds.updated_at')
             ->join('subcategories','favorbonds.subcategory_id','=','subcategories.id') 
             ->join('categories','subcategories.category_id','=','categories.id') 
@@ -26,6 +26,9 @@ class FavorBond extends Model
 
         if($categoryId)
             $res->where('categories.id',$categoryId);
+
+        if($subCategoryId)
+            $res->where('subcategories.id',$subCategoryId);
 
         foreach ($res->get() as $k => $v) {
             $r[$k] = json_decode($v,true);

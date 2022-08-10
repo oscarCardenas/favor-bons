@@ -19,17 +19,19 @@ class ProfileSeeder extends Seeder
     {
         $now = Carbon::now();
         $array = [
-            ['name' => 'Buyer', 'description' => null, 'created_at' => $now],
-            ['name' => 'admin', 'description' => null, 'created_at' => $now]
+            ['name' => 'Buyer', 'description' => null, 'created_at' => $now, 'updated_at' => $now],
+            ['name' => 'admin', 'description' => null, 'created_at' => $now, 'updated_at' => $now]
         ];
 
         $arrayUser = [
-            ['user_id' => 1, 'profile_id' => 1, 'created_at' => $now],
-            ['user_id' => 1, 'profile_id' => 2, 'created_at' => $now],
-            ['user_id' => 2, 'profile_id' => 1, 'created_at' => $now],
-            ['user_id' => 2, 'profile_id' => 2, 'created_at' => $now],
-            ['user_id' => 3, 'profile_id' => 1, 'created_at' => $now],
-            ['user_id' => 3, 'profile_id' => 2, 'created_at' => $now]
+            ['user_id' => 1, 'profile_id' => 1, 'created_at' => $now, 'updated_at' => $now],
+            ['user_id' => 1, 'profile_id' => 2, 'created_at' => $now, 'updated_at' => $now],
+            ['user_id' => 2, 'profile_id' => 1, 'created_at' => $now, 'updated_at' => $now],
+            ['user_id' => 2, 'profile_id' => 2, 'created_at' => $now, 'updated_at' => $now],
+            ['user_id' => 3, 'profile_id' => 1, 'created_at' => $now, 'updated_at' => $now],
+            ['user_id' => 3, 'profile_id' => 2, 'created_at' => $now, 'updated_at' => $now],
+            ['user_id' => 4, 'profile_id' => 1, 'created_at' => $now, 'updated_at' => $now],
+            ['user_id' => 4, 'profile_id' => 2, 'created_at' => $now, 'updated_at' => $now]
         ];
 
         Profile::insert($array);

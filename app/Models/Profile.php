@@ -13,4 +13,7 @@ class Profile extends Model
 
     protected $primaryKey = 'id';
 
+    CONST BUYER = 1;
+    CONST ADMIN = 2;
+    
 }

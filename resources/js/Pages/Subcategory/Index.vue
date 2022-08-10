@@ -6,7 +6,8 @@ import AppLayout from '@/Layouts/AppLayout.vue';
 import Modal from '@/Jetstream/Modal.vue';
 
 const props = defineProps({
-    categories: Object,
+    subcategories: Object,
+    category_id: String
 });
 
 const el = ref()
@@ -14,6 +15,7 @@ const confirmingCardDeletion = ref(false);
 const passwordInput = ref(null);
 const maxWidth = ref('2xl');
 const showModalEdit = ref(false);
+const CategoryId = ref(false);
 
 const paginate = reactive ({
     currentSort: 'name',
@@ -27,20 +29,23 @@ const paginate = reactive ({
 
 onMounted(() => {
     manejoRespuesta()
+    CategoryId.value = props.category_id;
 });
 
 const manejoRespuesta = () => {
-    paginate.gridData = props.categories;
+    paginate.gridData = props.subcategories;
 };
 
 const form = useForm({ 
     id: '', 
+    category_id: '', 
     name: '', 
     description: '' 
 });
 
 const formP = useForm({
     id:'',
+    category_id:'',
     password: '',
 });
 
@@ -51,14 +56,15 @@ const Back = () => {
 
 const confirmDelete = (d) => {
     formP.id = d.id;
+    formP.category_id = d.category_id;
     confirmingCardDeletion.value = true;
     setTimeout(() => passwordInput.value.focus(), 250);
 };
 
 const deleteCard = () => {
-    formP.delete(route('categories.destroy'), {
+    formP.delete(route('subcategories.destroy'), {
         preserveScroll: true,
-        onSuccess: (d) => {
+        onSuccess: () => {
             closeModal();
             manejoRespuesta();
         },
@@ -79,6 +85,7 @@ const closeModalEdit = () => {
 const Create = (d) => {
     form.id = '';
     form.name = '';
+    form.category_id = CategoryId.value;
     form.description = '';
     showModalEdit.value = true;
 }
@@ -86,13 +93,14 @@ const Create = (d) => {
 const Edit = (d) => {
     form.id = d.id;
     form.name = d.name;
+    form.category_id = d.category_id;
     form.description = d.description;
     showModalEdit.value = true;
 }
 
 const store = () => {
     if(form.id > 0){
-        form.put(route('categories.update'), {
+        form.put(route('subcategories.update'), {
             errorBag: 'store',
             preserveScroll: true,
             onSuccess: () => {
@@ -101,7 +109,7 @@ const store = () => {
             }
         });
     }else{        
-        form.post(route('categories.store'), {
+        form.post(route('subcategories.store'), {
             errorBag: 'store',
             preserveScroll: true,
             onSuccess: () => {
@@ -110,6 +118,10 @@ const store = () => {
             }
         });
     }
+};
+
+const returnCategories = () => {
+    Inertia.visit('/admin/categories/index', { method: 'get' })
 };
 
 const filterOption = computed(() => {
@@ -154,10 +166,10 @@ const sort = (s) => {
 </script>
 
 <template>
-    <AppLayout title="Categories">
+    <AppLayout title="Subcategories">
         <template #header>
             <h2 class="font-semibold text-xl text-gray-800 leading-tight">
-                Categories
+                Subcategories
             </h2>
         </template>
 
@@ -165,6 +177,9 @@ const sort = (s) => {
             <div class="bg-white sm:p-6 shadow sm:rounded-md">
                 <div class="flex">
                     <div class="flex-none w-1/3 mt-1 mr-8">
+                        <JetButton class="bg-gray-300 hover:bg-gray-400 ml-2 mr-2" @click="returnCategories">
+                            Back
+                        </JetButton>
                         <JetButton @click="Create">
                             New
                         </JetButton>
@@ -217,7 +232,7 @@ const sort = (s) => {
                         <div class="flex">
                             <div class="flex-none w-3/4 mt-1 mr-8 ml-8 pl-8">
                                 <div class="flex" @click="sort('name')">
-                                    <h5 class="font-medium font-bold leading-tight text-xl mt-0 mb-2">Category</h5>
+                                    <h5 class="font-medium font-bold leading-tight text-xl mt-0 mb-2">Subcategory</h5>
                                     <div v-if="paginate.currentSort == 'name'" class="ml-2 mt-1">
                                         <svg v-if="paginate.currentSortDir == 'asc'" xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
                                             <path stroke-linecap="round" stroke-linejoin="round" d="M19 9l-7 7-7-7" />
@@ -256,9 +271,6 @@ const sort = (s) => {
                                         <a href="javascript:void(0);" title="Edit" @click="Edit(f)">
                                             <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z" /></svg>
                                         </a>
-                                        <a :href="route('subcategories.index', { category_id: f.id })" title="Subcategories">
-                                            <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6V4m0 2a2 2 0 100 4m0-4a2 2 0 110 4m-6 8a2 2 0 100-4m0 4a2 2 0 110-4m0 4v2m0-6V4m6 6v10m6-2a2 2 0 100-4m0 4a2 2 0 110-4m0 4v2m0-6V4" /></svg>
-                                        </a> 
                                         <a href="javascript:void(0);" title="Delete" @click="confirmDelete(f)">
                                             <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" /></svg>
                                         </a>
@@ -309,7 +321,7 @@ const sort = (s) => {
                 </JetDangerButton>
             </template>
         </JetDialogModal>
-        <!-- modal form categories --> 
+        <!-- modal form subcategories --> 
         <Modal :show="showModalEdit" :max-width="maxWidth" :closeable="false" @close="closeModalEdit">
             <form @submit.prevent="store">
                 <div class="bg-white px-4 pt-5 pb-4 sm:p-6 sm:pb-4">
