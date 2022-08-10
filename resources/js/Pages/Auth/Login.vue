@@ -32,10 +32,7 @@ const submit = () => {
 <template>
     <Head title="Log in" />
 
-    <JetAuthenticationCard>
-        <template #logo>
-            <JetAuthenticationCardLogo />
-        </template>
+    <JetAuthenticationCard class="wrapper">
 
         <JetValidationErrors class="mb-4" />
 
@@ -45,12 +42,13 @@ const submit = () => {
 
         <form @submit.prevent="submit">
             <div>
+                 <JetAuthenticationCardLogo class="w-1/2 content-center" />
                 <JetLabel for="email" value="Email" />
                 <JetInput
                     id="email"
                     v-model="form.email"
                     type="email"
-                    class="mt-1 block w-full"
+                    class="mt-1 block w-full focus:ring-borderInput"
                     required
                     autofocus
                 />
@@ -62,7 +60,7 @@ const submit = () => {
                     id="password"
                     v-model="form.password"
                     type="password"
-                    class="mt-1 block w-full"
+                    class="mt-1 block w-full focus:ring-borderInput"
                     required
                     autocomplete="current-password"
                 />
@@ -80,10 +78,11 @@ const submit = () => {
                     Forgot your password?
                 </Link>
 
-                <JetButton class="ml-4" :class="{ 'opacity-25': form.processing }" :disabled="form.processing">
+                <JetButton class="ml-4 primaryButton" :class="{ 'opacity-25': form.processing }" :disabled="form.processing">
                     Log in
                 </JetButton>
             </div>
         </form>
     </JetAuthenticationCard>
 </template>
+

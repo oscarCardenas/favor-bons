@@ -9,12 +9,14 @@
         <!-- Fonts -->
         <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700&display=swap">
 
+        <link href="https://fonts.googleapis.com/css2?family=Lato:wght@300;400;700;900&display=swap" rel="stylesheet">
+
         <!-- Scripts -->
         @routes
         @vite('resources/js/app.js')
         @inertiaHead
     </head>
-    <body class="font-sans antialiased">
+    <body class="font-Lato">
         @inertia
     </body>
 </html>

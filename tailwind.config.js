@@ -12,8 +12,18 @@ module.exports = {
     darkMode: 'class',
     theme: {
         extend: {
+            colors: {
+                transparent: 'transparent',
+                primary1:    '#011b32',
+                primary2:    '#baf241',
+                white:       '#ffffff',
+                secondary1:  '#012746',
+                secondary2:  '#22394d',
+                secondary3:  '#75797F',
+                borderInput: '#87bf0d'
+            },
             fontFamily: {
-                sans: ['Nunito', ...defaultTheme.fontFamily.sans],
+                Lato: "'Lato', sans-serif;"
             },
         },
     },
