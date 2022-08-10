@@ -15,7 +15,7 @@
         executionTypeSelected: { type: Object },
     });
 
-    const state = reactive({ step: 3, favorUrl: `${window.location.protocol}//${window.location.host}/favor/${route().params.id}` })
+    const state = reactive({ step: 1, favorUrl: '' })
     const stepHeaders = [ "Step 1", "Step 2", "Step 3"];
     let self = this;
  
