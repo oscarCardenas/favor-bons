@@ -3,16 +3,16 @@
     import FavorsListItem from '@/Components/FavorsListItem.vue';    
 
     const props = defineProps({
-        favorBonds: Array
+        favorList: Array
     });
 
 </script>
 
 <template>
-    <AppLayout title="My Favor Bonds">
+    <AppLayout title="My Favors">
         <template #header>
             <h2 class="font-semibold text-xl text-gray-800 leading-tight">
-                My Favor Bonds
+                My Favors
             </h2>
         </template>
 
@@ -22,14 +22,14 @@
                 <div class="bg-white sm:p-6 shadow sm:rounded-md">
                     <div className="divide-y divide-slate-100" >
                         <a :href="route('favors.create')" class="h-10 px-6 font-semibold rounded-md bg-black text-white">
-                            Create Favor
+                            Create Favors
                         </a>
                     </div>
                 </div>
 
                 <div class="bg-white sm:p-6 shadow sm:rounded-md">
                     <div className="divide-y divide-slate-100" >
-                        <FavorsListItem v-for="favorBond in favorBonds" :key="favorBond.id"  :favorBond="favorBond" />
+                        <FavorsListItem v-for="favor in favorList" :key="favor.id"  :favor="favor" />
                     </div>
                 </div>
             </div>

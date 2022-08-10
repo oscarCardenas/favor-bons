@@ -2,7 +2,6 @@
 
 namespace App\Http\Controllers\Auth;
 
-use Illuminate\Http\Request;
 use Inertia\Inertia;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Redirect;
@@ -20,12 +19,12 @@ use DB;
 
 class RegisteredUserController extends Controller
 {
-    public function create(Request $request)
+    public function create()
     {
         return Inertia::render('Auth/Register',['categories' => Category::all()]);
     }
 
-    public function store(Request $request)
+    public function store()
     {
         DB::beginTransaction();
         try {

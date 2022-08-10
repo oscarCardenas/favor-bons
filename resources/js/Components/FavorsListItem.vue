@@ -1,26 +1,26 @@
 <script setup>
 
     const props = defineProps({
-        favorBond: Object
+        favor: Object
     });
 
 </script>
 
 <template>
     <div class="flex font-sans p-6">
-        <div class="flex-none w-48 relative">
-            <img src="https://images.unsplash.com/photo-1618090584176-7132b9911657?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=928&q=80" alt="" class="absolute inset-0 w-full h-full object-cover" loading="lazy" />
+        <div v-if="favor.image" class="flex-none w-48 relative">
+            <img :src="favor.image" alt="" class="absolute inset-0 w-full h-full object-cover" loading="lazy" />
         </div>
         <form class="flex-auto p-6">
             <div class="flex flex-wrap">
             <h1 class="flex-auto text-lg font-semibold text-slate-900">
-                {{ favorBond.title }}
+                {{ favor.title }}
             </h1>
             <div class="text-lg font-semibold text-slate-500">
-                Cost: {{favorBond.price}} FavorBonds
+                Cost: {{favor.price}} FavorBonds
             </div>
             <div class="w-full flex-none text-sm font-medium text-slate-700 mt-2">
-                {{ favorBond.description }}
+                {{ favor.description }}
             </div>
             </div>
             <div class="flex items-baseline mt-4 mb-6 pb-6 border-b border-slate-200"></div>

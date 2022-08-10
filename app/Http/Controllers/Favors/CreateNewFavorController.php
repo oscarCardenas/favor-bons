@@ -4,10 +4,15 @@ namespace App\Http\Controllers\Favors;
 
 use App\Http\Controllers\Controller;
 use Inertia\Inertia;
-use Illuminate\Http\Request;
 use App\Models\FavorBond;
+use App\Models\Category;
+use App\Models\ExecutionOfFavor;
+use Illuminate\Http\Response;
+use Illuminate\Support\Facades\Redirect;
 
 use Auth;
+use Request;
+use Log;
 
 class CreateNewFavorController extends Controller
 {
@@ -18,7 +23,12 @@ class CreateNewFavorController extends Controller
      */
     public function create()
     {
-        return Inertia::render('Favors/CreateFavors');
+        $categories = Category::getCategories();
+        $executionTypes = ExecutionOfFavor::all();
+        return Inertia::render('Favors/CreateFavors', [ 
+            'categories' => $categories,
+            'executionTypes' => $executionTypes
+            ] );
     }
 
     /**
@@ -29,24 +39,33 @@ class CreateNewFavorController extends Controller
      *
      * @throws \Illuminate\Validation\ValidationException
      */
-    public function store(Request $request)
-    {
-        // $request->validate([
-        //     'name' => 'required|string|max:255',
-        //     'email' => 'required|string|email|max:255|unique:users',
-        //     'password' => ['required', 'confirmed', Rules\Password::defaults()],
-        // ]);
+    public function store()
+    {        
 
-        // $user = User::create([
-        //     'name' => $request->name,
-        //     'email' => $request->email,
-        //     'password' => Hash::make($request->password),
-        // ]);
+        $input = Request::all();
 
-        // event(new Registered($user));
+        Log::debug($input);
+        
+        $favorBond = new FavorBond();
+        $favorBond->subcategory_id = $input['subCategory'];
+        $favorBond->user_id = Auth::id();
+        $favorBond->title = $input['title'];
+        $favorBond->description = $input['description'];
+        $favorBond->qualified_description = $input['qualified_description'];
+        $favorBond->price = $input['price'];
+        $favorBond->price_description = $input['price_description'];
+        $favorBond->execution_of_favor_id = $input['executionType'];
+            // 'unlimited' => true,
+        $favorBond->stock = $input['stock'];
+        
+        if( !is_null($input['image']) && !empty($input['image']) ) {
+            $response = cloudinary()->upload( $input['image']->getRealPath())->getSecurePath();
+            $favorBond->image = $response;
+        }
+        
 
-        // Auth::login($user);
+        $favorBond->save();                
 
-        return redirect(RouteServiceProvider::HOME);
+        return Redirect::route('favors.create', ['id' => 1] );
     }
 }

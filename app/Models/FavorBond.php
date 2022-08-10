@@ -38,8 +38,8 @@ class FavorBond extends Model
         return $r;
     }
 
-    public static function getUserFavorBonds( $userId ) {
-        return self::where('user_id', $userId);
+    public static function getUserFavorBonds( $userId ) {        
+        return self::where('user_id', '=', $userId )->get();
     }
 
 }

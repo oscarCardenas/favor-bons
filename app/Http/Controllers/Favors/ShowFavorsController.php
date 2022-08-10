@@ -18,8 +18,8 @@ class ShowFavorsController extends Controller
      */
     public function __invoke(Request $request)
     {
-        $user = Auth::user();
-        $favorBonds = FavorBond::all(); 
-        return Inertia::render('Favors/ShowFavors',[ 'favorBonds' => $favorBonds]);
+        $userId = Auth::id();
+        $favorList = FavorBond::getUserFavorBonds($userId);
+        return Inertia::render('Favors/ShowFavorList',[ 'favorList' => $favorList ]);
     }
 }
