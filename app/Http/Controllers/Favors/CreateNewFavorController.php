@@ -40,10 +40,12 @@ class CreateNewFavorController extends Controller
      * @throws \Illuminate\Validation\ValidationException
      */
     public function store()
-    {
+    {        
 
         $input = Request::all();
 
+        Log::debug($input);
+        
         $favorBond = new FavorBond();
         $favorBond->subcategory_id = $input['subCategory'];
         $favorBond->user_id = Auth::id();
@@ -56,11 +58,13 @@ class CreateNewFavorController extends Controller
             // 'unlimited' => true,
         $favorBond->stock = $input['stock'];
         
-        $favorBond->save();
+        if( !is_null($input['image']) && !empty($input['image']) ) {
+            $response = cloudinary()->upload( $input['image']->getRealPath())->getSecurePath();
+            $favorBond->image = $response;
+        }
         
-        // $response = cloudinary()->upload($request->file('image')->getRealPath())->getSecurePath();
 
-        // $favorBond->image = $response;
+        $favorBond->save();                
 
         return Redirect::route('favors.create');
     }

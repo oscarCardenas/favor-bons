@@ -8,8 +8,8 @@
 
 <template>
     <div class="flex font-sans p-6">
-        <div class="flex-none w-48 relative">
-            <img src="https://images.unsplash.com/photo-1618090584176-7132b9911657?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=928&q=80" alt="" class="absolute inset-0 w-full h-full object-cover" loading="lazy" />
+        <div v-if="favor.image" class="flex-none w-48 relative">
+            <img :src="favor.image" alt="" class="absolute inset-0 w-full h-full object-cover" loading="lazy" />
         </div>
         <form class="flex-auto p-6">
             <div class="flex flex-wrap">
