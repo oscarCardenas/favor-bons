@@ -10,7 +10,7 @@
 
     const props = defineProps({
         categories: { type : Object },
-        categorySelected : { type : Object, default : { sub_category : [] } },
+        // categorySelected : { type : Object, default : { sub_category : [] } },
         executionTypes : { type : Object },
         executionTypeSelected: { type: Object },
     });
@@ -90,8 +90,8 @@
                                                     :form="form"  
                                                     :next="next"
                                                     :categories="categories"
-                                                    :categorySelected="categorySelected"                                                    
                                                     />
+                                                    <!-- :categorySelected="categorySelected"                                                     -->
                                                 
                                             </div>
                                         <!-- form - end -->

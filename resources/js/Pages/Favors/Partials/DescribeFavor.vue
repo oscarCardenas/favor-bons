@@ -1,10 +1,23 @@
 <script setup>
-    defineProps({
+    import { ref, watch, computed } from 'vue';
+
+    const props = defineProps({
         categories: { type : Object },
-        categorySelected : { type : Object, default : { sub_category : [] } },
+        // categorySelected : { type : Object, default : { sub_category : [] } },
         form : Object,
         next: Function
     })
+
+    const subCategories = ref([])
+
+    const formCategory = computed(() => {
+        return props.form.category;            
+    });
+
+    watch(formCategory, (NewformCategory) => {        
+        subCategories.value = formCategory.value.sub_category;
+    });
+
 </script>
 
 <template>
@@ -23,9 +36,8 @@
 
     <div class="flex flex-col mb-4">
         <JetLabel class="inline-flex" for="title" value="What category does this best fit in?" />
-        <select name="categories" id="categories" v-model="categorySelected"
-            class="border-gray-300 focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 rounded-md shadow-sm">
-            <option :value="category" v-for="category in categories" :key="category.id">{{category.name}}</option>
+        <select name="categories" id="categories" v-model="form.category" class="border-gray-300 focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 rounded-md shadow-sm">
+            <option v-for="category in props.categories" :value="category" :key="category.id">{{category.id}}--{{category.name}}</option>
         </select>
     </div>
 
@@ -33,7 +45,7 @@
         <JetLabel class="inline-flex" for="title" value="Which sub-category does this best fit in?" />
         <select name="subCategories" id="subCategories" v-model="form.subCategory"
             class="border-gray-300 focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 rounded-md shadow-sm">
-            <option :value="subCategory.id" v-for="subCategory in categorySelected.sub_category" :key="subCategory.id">{{subCategory.name}}</option>
+            <option :value="subCategory.id" v-for="subCategory in subCategories" :key="subCategory.id">{{subCategory.name}}</option>
         </select>
     </div>
     
