@@ -9,6 +9,7 @@ use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Laravel\Fortify\Rules\Password;
+use Illuminate\Http\Request;
 
 use App\Models\User;
 use App\Models\Category;
@@ -24,7 +25,7 @@ class RegisteredUserController extends Controller
         return Inertia::render('Auth/Register',['categories' => Category::all()]);
     }
 
-    public function store()
+    public function store(Request $request)
     {
         DB::beginTransaction();
         try {
